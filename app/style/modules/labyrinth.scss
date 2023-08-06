@@ -1,0 +1,116 @@
+
+.labyrinth-module .content {
+  position: relative;
+
+  & .screen {
+    position: absolute;
+    background-color: #646464;
+    top: 45px;
+    left: 85px;
+    padding: 4px;
+    width: 210px;
+    height: 210px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: space-between;
+    align-content: space-between;
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+
+    & .point {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      min-height: 20px;
+      max-width: 20px;
+      max-height: 20px;
+      border-radius: 50%;
+      background-color: #3d3d3d;
+      transition: all 200ms;
+
+      &.active {
+        background-color: white;
+        box-shadow: 0 0 12px 2px rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+
+  & .matrix-label {
+    position: absolute;
+    top: 260px;
+    left: 170px;
+  }
+
+  & .button {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #1F1F1F;
+    box-shadow: 0 1px 3px 0 rgba(#0F0F0F, .5),
+    inset 0 1px rgba(#FFF, .2);
+    background-size: auto 150%;
+    background: linear-gradient(#b75454, #771616) 0 100%;
+    cursor: pointer;
+
+    & .label {
+      position: absolute;
+      top: 37px;
+    }
+
+    & .round-border {
+      position: absolute;
+      top: -9px;
+      left: -9px;
+      border: solid 2px white;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      border-bottom: none;
+    }
+
+    &:active {
+      color: #000;
+      background-position: 0 50%;
+      background: #732222;
+      box-shadow: inset 0 2px 3px rgba(black, .5), 0 1px 1px rgba(white, .1);
+    }
+
+    &.up {
+      left: 20px;
+      top: 80px;
+
+      & .label {
+        left: 12px;
+      }
+    }
+
+    &.down {
+      left: 320px;
+      top: 80px;
+
+      & .label {
+        left: 0;
+      }
+    }
+
+    &.left {
+      left: 20px;
+      top: 160px;
+
+      & .label {
+        left: 5px;
+      }
+    }
+
+    &.right {
+      left: 320px;
+      top: 160px;
+
+      & .label {
+        left: 1px;
+      }
+    }
+  }
+}

@@ -1,0 +1,158 @@
+
+.simon-says-module {
+  & .content {
+    position: relative;
+
+    & .green-button {
+      position: absolute;
+      top: 50px;
+      left: 80px;
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+      border: solid 2px white;
+      transition: all 100ms;
+      cursor: pointer;
+      background: rgb(10,143,0);
+      background: linear-gradient(192deg, rgba(10,143,0,1) 0%, rgba(41,217,0,1) 100%);
+
+      &:hover {
+        border: solid 4px white;
+      }
+
+      &.active {
+        background: rgb(0,223,14);
+        background: linear-gradient(192deg, rgba(0,223,14,1) 0%, rgba(176,255,0,1) 100%);
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    & .red-button {
+      position: absolute;
+      top: 50px;
+      left: 185px;
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+      border: solid 2px white;
+      transition: all 100ms;
+      cursor: pointer;
+      background: rgb(144,31,0);
+      background: linear-gradient(192deg, rgba(144,31,0,1) 0%, rgba(255,16,0,1) 100%);
+
+      &:hover {
+        border: solid 4px white;
+      }
+
+      &.active {
+        background: rgb(184,40,0);
+        background: linear-gradient(192deg, rgba(184,40,0,1) 0%, rgba(255,102,0,1) 100%);
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    & .yellow-button {
+      position: absolute;
+      top: 155px;
+      left: 80px;
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+      border: solid 2px white;
+      transition: all 100ms;
+      cursor: pointer;
+      background: rgb(193,133,4);
+      background: linear-gradient(192deg, rgba(193,133,4,1) 0%, rgba(255,201,0,1) 100%);
+
+      &:hover {
+        border: solid 4px white;
+      }
+
+      &.active {
+        background: rgb(247,182,0);
+        background: linear-gradient(192deg, rgba(247,182,0,1) 0%, rgba(241,255,0,1) 100%);
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    & .blue-button {
+      position: absolute;
+      top: 155px;
+      left: 185px;
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+      border: solid 2px white;
+      transition: all 100ms;
+      cursor: pointer;
+      background: rgb(0,26,171);
+      background: linear-gradient(192deg, rgba(0,26,171,1) 0%, rgba(0,108,255,1) 100%);
+
+      &:hover {
+        border: solid 4px white;
+      }
+
+      &.active {
+        background: rgb(0,98,171);
+        background: linear-gradient(192deg, rgba(0,98,171,1) 0%, rgba(0,198,255,1) 100%);
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    & .step-indicator {
+      & div {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        border: solid 2px white;
+        left: 320px;
+        box-shadow: inset 0 2px 3px rgba(0,0,0,0.3);
+
+        &.active {
+          background-color: white;
+        }
+
+        &.failed {
+          background-color: red;
+        }
+      }
+
+      & :nth-child(6) {
+        top: 60px;
+      }
+
+      & :nth-child(5) {
+        top: 90px;
+      }
+
+      & :nth-child(4) {
+        top: 120px;
+      }
+
+      & :nth-child(3) {
+        top: 150px;
+      }
+
+      & :nth-child(2) {
+        top: 180px;
+      }
+
+      & :nth-child(1) {
+        top: 210px;
+      }
+    }
+
+    & .steps-label {
+      width: 150px;
+      transform: rotate(-90deg);
+      position: absolute;
+      top: 130px;
+      left: 275px;
+    }
+  }
+}

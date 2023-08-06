@@ -1,0 +1,113 @@
+
+.card-module {
+  position: relative;
+
+  & .row-of-inputs {
+    position: absolute;
+    display: flex;
+    gap: 10px;
+
+    &.row-1 {
+      left: 40px;
+      top: 40px;
+    }
+
+    &.row-2 {
+      left: 40px;
+      top: 180px;
+    }
+  }
+
+  & .port-a-label {
+    position: absolute;
+    top: 20px;
+    left: 165px;
+  }
+
+  & .port-b-label {
+    position: absolute;
+    top: 265px;
+    left: 165px;
+  }
+
+  & .slot {
+    border: solid 2px white;
+    border-radius: 8px;
+    width: 50px;
+    height: 80px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+
+    & .slot-input {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border-top: solid 1px white;
+      background: linear-gradient(#a8a8a8, #727272);
+      box-shadow: 0 5px 1px rgba(0, 0, 0, 0.5), -3px 5px 5px rgba(0, 0, 0, 0.3), 3px 5px 5px rgba(0, 0, 0, 0.3);
+
+      & .inner-body {
+        pointer-events: none;
+        position: absolute;
+        top: 5px;
+        bottom: 5px;
+        left: 5px;
+        right: 5px;
+        border-radius: 50%;
+        background: linear-gradient(#c0c0c0, #ffffff);
+        box-shadow: 0 5px 3px rgba(0, 0, 0, 0.2);
+        border-top: solid 1px white;
+
+        & .hole {
+          position: absolute;
+          top: 4px;
+          bottom: 4px;
+          left: 4px;
+          right: 4px;
+          border-radius: 50%;
+          background-color: #3d3d3d;
+          box-shadow: inset 0 4px 5px #000;
+        }
+      }
+    }
+
+    & .led-indicator {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      border-radius: 50px;
+      border: solid 2px white;
+      box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.3);
+
+      &.red {
+        background-color: orangered;
+      }
+
+      &.green {
+        background-color: greenyellow;
+      }
+
+      &.blue {
+        background-color: deepskyblue;
+      }
+
+      &.yellow {
+        background-color: yellow;
+      }
+    }
+  }
+
+  & #wire-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 300px;
+    pointer-events: none;
+  }
+
+
+}

@@ -1,0 +1,222 @@
+$module-width: 420px;
+$module-height: 300px;
+
+.label {
+  color: white;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.box-center-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.device {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  height: auto;
+
+  & .device-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    &.device-width-1 {
+      max-width: ($module-width * 1)+4;
+    }
+
+    &.device-width-2 {
+      max-width: ($module-width * 2)+8;
+    }
+
+    &.device-width-3 {
+      max-width: ($module-width * 3)+12;
+    }
+
+    &.device-width-4 {
+      max-width: ($module-width * 4)+16;
+    }
+
+    & .module {
+      box-sizing: border-box;
+      background: lightgrey;
+      width: $module-width;
+      height: $module-height;
+      margin: 2px;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      border: 1px solid #e7e7e7;
+      border-bottom: 2px solid #8f8e8e;
+      border-right: 1px solid #8f8e8e;
+      border-top: 1px solid #ddd;
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+
+      & .content {
+        flex-grow: 1;
+        height: 100%;
+        background: #c2c2c2;
+      }
+    }
+  }
+}
+
+.module-status-indicator {
+  height: 100%;
+  background: #656565;
+  width: 35px;
+  position: relative;
+
+  & .led {
+    position: absolute;
+    width: 10px;
+    height: 20px;
+    background: black;
+    left: 12px;
+    transition: all 200ms;
+
+    & div {
+      transform: rotate(-90deg);
+      position: relative;
+      top: -20px;
+    }
+
+    &.armed {
+      top: 100px;
+
+      &.active {
+        background: red;
+        box-shadow: 0 0 12px 2px rgba(255, 140, 0, 0.9);
+      }
+    }
+
+    &.disarmed {
+      top: 250px;
+
+      &.active {
+        background: lightgreen;
+        box-shadow: 0 0 12px 2px rgba(123, 255, 46, 0.9);
+      }
+    }
+  }
+}
+
+.config-module {
+  width: 150px;
+  height: 100px;
+  transition: all 200ms;
+
+  &:hover {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+}
+
+.key {
+  width: 60px;
+  height: 60px;
+
+  & .cap {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 28px;
+    font-weight: bolder;
+    text-align: center;
+    color: #b2b2b2;
+    border-radius: 10px;
+    background: white -webkit-linear-gradient(top, #f9f9f9 0%, #D2D2D2 80%, #c0c0c0 100%);
+    border-color: #f2f2f2;
+    border-style: solid;
+    border-width: 1px;
+    border-bottom-width: 4px;
+    border-right-width: 2px;
+    border-left-width: 2px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2), 2px 2px 4px rgba(0, 0, 0, 0.1), -2px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 50ms;
+    cursor: pointer;
+    transform: translateY(-4px);
+
+    &:active {
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.7), 1px 2px 1px rgba(0, 0, 0, 0.4), -1px 2px 1px rgba(0, 0, 0, 0.4);
+      background: -webkit-linear-gradient(top, #e5e5e5 0%, #d9d9d9 80%, #c7c7c7 100%);
+      border-bottom-width: 3px;
+      transform: translateY(0px);
+      color: #939393;
+    }
+  }
+
+  & .key-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid white;
+    border-radius: 10px;
+  }
+}
+
+.config-device {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+
+  & .config-device-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+
+    &.device-width-1 {
+      max-width: 208px;
+    }
+
+    &.device-width-2 {
+      max-width: 416px;
+    }
+
+    &.device-width-3 {
+      max-width: 632px;
+    }
+
+    &.device-width-4 {
+      max-width: 864px;
+    }
+
+    & .config-module {
+      width: 200px;
+      height: 140px;
+      background-color: #e8e8e8;
+      border-radius: 8px;
+      margin:4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        box-shadow: 0 3px 4px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+      }
+    }
+
+  }
+}
+
+
