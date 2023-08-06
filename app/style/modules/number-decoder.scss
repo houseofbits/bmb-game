@@ -1,0 +1,96 @@
+
+.card-module {
+  position: relative;
+
+  & .led-indicators {
+    position: absolute;
+    border: solid 1px white;
+    border-radius: 8px;
+    width: 200px;
+    height: 34px;
+    top: 10px;
+    left: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    & .led {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: solid 2px white;
+      box-shadow: inset 0 2px 3px rgba(0,0,0,0.3);
+
+      &.green {
+        background-color: greenyellow;
+      }
+
+      &.white {
+        background-color: white;
+      }
+    }
+  }
+
+  & .numbers-input{
+    position: absolute;
+    border: solid 1px white;
+    border-radius: 8px;
+    width: 150px;
+    height: 40px;
+    top: 50px;
+    left: 125px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-weight: bolder;
+    font-size: 26px;
+    color: #626262;
+    background-color: rgba(0,0,0,0.1);
+  }
+
+  & .keypad {
+    position: absolute;
+    top: 100px;
+    left: 70px;
+
+    & .numeric-key {
+      width: 60px;
+      height: 60px;
+      position: absolute;
+    }
+
+    & .enter-key {
+      width: 60px;
+      height: 124px;
+      position: absolute;
+    }
+
+    & .key-row-1 {
+      top: 0;
+    }
+
+    & .key-row-2 {
+      top: 64px;
+    }
+
+    & .key-row-3 {
+      top: 128px;
+    }
+
+    & .key-col-1 {
+      left: 0;
+    }
+
+    & .key-col-2 {
+      left: 64px;
+    }
+
+    & .key-col-3 {
+      left: 128px;
+    }
+
+    & .key-col-4 {
+      left: 192px;
+    }
+  }
+}
