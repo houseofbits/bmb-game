@@ -1,139 +1,235 @@
 <script setup lang="ts">
 import "@style/modules/labyrinth.scss";
 import ModuleStatusIndicator from "@src/components/ModuleStatusIndicator.vue";
-import {ref} from "vue";
+import { ref } from "vue";
 import LabyrinthPoint from "@src/modules/Labyrinth/structures/LabyrinthPoint";
-import {LabyrinthDirection} from "@src/modules/Labyrinth/structures/LabyrinthDirection";
-import wallsDefinition from "@src/modules/Labyrinth/helpers/wallsDefinition";
-import defineModuleState, {ModuleEmits, ModuleProps} from "@src/composables/defineModuleState";
+import { LabyrinthDirection } from "@src/modules/Labyrinth/structures/LabyrinthDirection";
+import defineModuleState, {
+  ModuleEmits,
+  ModuleProps,
+} from "@src/composables/defineModuleState";
+import FramedLabel from "@src/components/FramedLabel.vue";
+import { getRandomGameLevel } from "@src/modules/Labyrinth/helpers/gameLevels";
+import LabyrinthGame from "@src/modules/Labyrinth/structures/LabyrinthGame";
+import LabyrinthWalls from "@src/modules/Labyrinth/structures/LabyrinthWalls";
+import getWallConfiguration from "@src/modules/Labyrinth/helpers/wallsDefinition";
+import defineDebugState from "@src/composables/defineDebugState";
 
 const emit = defineEmits(ModuleEmits);
 const props = defineProps(ModuleProps);
 const state = defineModuleState(props, emit);
+const debugState = defineDebugState();
 
 state.onArmed(armModule);
 state.onReady(restartModule);
 state.onFailed(freezeModule);
 
 const BLINK_INTERVAL_MS = 600;
+const OBSTACLE_BLINK_INTERVAL_MS = 300;
 
-const screen = ref<Array<boolean>>(Array.apply(null, Array(8 * 8)).map(() => false));
+const screen = ref<Array<boolean>>(
+  Array.apply(null, Array(8 * 8)).map(() => false),
+);
 const currentPoint = ref<LabyrinthPoint>(new LabyrinthPoint(0, 0));
 const endingPoint = ref<LabyrinthPoint>(new LabyrinthPoint(7, 6));
 let blinkTimerId: number;
+let obstacleBlinkTimerId: number;
+let gameLevel: LabyrinthGame | null = null;
+let currentGameLevel: number = 0;
+let wallsDefinition: LabyrinthWalls | null = null;
+const strikeNumber = ref<number>(0);
 
-//TDO: generate point positions based on difficulty level
 function armModule(): void {
-    currentPoint.value.x = 0;
-    currentPoint.value.y = 0;
+  wallsDefinition = getWallConfiguration(props.difficulty);
+  gameLevel = getRandomGameLevel(props.difficulty);
+  if (gameLevel) {
+    strikeNumber.value = 0;
+    currentGameLevel = 0;
+    currentPoint.value = gameLevel.startingPoint.getCopy();
+    endingPoint.value = gameLevel
+      .getLevel(currentGameLevel)
+      .endingPoint.getCopy();
+
     screen.value[currentPoint.value.getArrayPosition()] = true;
     screen.value[endingPoint.value.getArrayPosition()] = true;
-    blinkEndpoint();
+    startBlinking();
+  }
 }
 
 function restartModule(): void {
-    clearTimeout(blinkTimerId);
-    clearScreen();
+  endBlinking();
+  clearScreen();
 }
 
-function freezeModule(): void {
-
-}
+function freezeModule(): void {}
 
 function move(direction: LabyrinthDirection): void {
-    if (!state.isArmed.value || state.isFailed.value) {
-        return;
-    }
+  if (!state.isArmed.value || state.isFailed.value) {
+    return;
+  }
+  if (!wallsDefinition?.canCross(direction, currentPoint.value)) {
+    failModule();
+    return;
+  }
+
+  screen.value[currentPoint.value.getArrayPosition()] = false;
+
+  switch (direction) {
+    case LabyrinthDirection.UP:
+      if (currentPoint.value.y > 0) {
+        currentPoint.value.y--;
+      }
+      break;
+    case LabyrinthDirection.DOWN:
+      if (currentPoint.value.y < 7) {
+        currentPoint.value.y++;
+      }
+      break;
+    case LabyrinthDirection.LEFT:
+      if (currentPoint.value.x > 0) {
+        currentPoint.value.x--;
+      }
+      break;
+    case LabyrinthDirection.RIGHT:
+      if (currentPoint.value.x < 7) {
+        currentPoint.value.x++;
+      }
+      break;
+  }
+
+  if (gameLevel?.getLevel(currentGameLevel).isObstacle(currentPoint.value)) {
+    failModule();
+    return;
+  }
+
+  screen.value[currentPoint.value.getArrayPosition()] = true;
+
+  checkSolved();
+}
+
+function failModule(): void {
+  strikeNumber.value++;
+  if (strikeNumber.value > 2) {
+    state.emitFailed();
+    endBlinking();
+    clearScreen();
+  } else if (gameLevel) {
     screen.value[currentPoint.value.getArrayPosition()] = false;
-
-    if (!wallsDefinition.canCross(direction, currentPoint.value)) {
-        state.emitFailed();
-        clearTimeout(blinkTimerId);
-        clearScreen();
-        return;
-    }
-
-    switch (direction) {
-        case LabyrinthDirection.UP:
-            if (currentPoint.value.y > 0) {
-                currentPoint.value.y--;
-            }
-            break;
-        case LabyrinthDirection.DOWN:
-            if (currentPoint.value.y < 7) {
-                currentPoint.value.y++;
-            }
-            break;
-        case LabyrinthDirection.LEFT:
-            if (currentPoint.value.x > 0) {
-                currentPoint.value.x--;
-            }
-            break;
-        case LabyrinthDirection.RIGHT:
-            if (currentPoint.value.x < 7) {
-                currentPoint.value.x++;
-            }
-            break;
-    }
+    currentPoint.value = gameLevel.startingPoint.getCopy();
     screen.value[currentPoint.value.getArrayPosition()] = true;
-
-    checkSolved();
+  }
 }
 
 function checkSolved(): void {
-    if (endingPoint.value.isEqual(currentPoint.value)) {
-        clearTimeout(blinkTimerId);
-        clearScreen();
-        state.emitDisarmed();
+  const isLastLevel = gameLevel?.getLevelCount() === currentGameLevel + 1;
+
+  if (endingPoint.value.isEqual(currentPoint.value)) {
+    if (isLastLevel) {
+      endBlinking();
+      clearScreen();
+      state.emitDisarmed();
+    } else if (gameLevel) {
+      clearScreen();
+      currentPoint.value = gameLevel
+        .getLevel(currentGameLevel)
+        .endingPoint.getCopy();
+      currentGameLevel++;
+      endingPoint.value = gameLevel
+        .getLevel(currentGameLevel)
+        .endingPoint.getCopy();
+      screen.value[currentPoint.value.getArrayPosition()] = true;
+      screen.value[endingPoint.value.getArrayPosition()] = true;
     }
+  }
 }
 
 function clearScreen(): void {
-    screen.value = Array.apply(null, Array(8 * 8)).map(() => false);
+  screen.value = Array.apply(null, Array(8 * 8)).map(() => false);
 }
 
-function blinkEndpoint(): void {
+function endBlinking(): void {
+  clearInterval(blinkTimerId);
+  clearInterval(obstacleBlinkTimerId);
+}
+
+function startBlinking(): void {
+  endBlinking();
+
+  blinkTimerId = <number>(<unknown>setInterval(() => {
     let pos = endingPoint.value.getArrayPosition();
     screen.value[pos] = !screen.value[pos];
+  }, BLINK_INTERVAL_MS));
 
-    clearTimeout(blinkTimerId);
-    blinkTimerId = <number><unknown>setTimeout(blinkEndpoint, BLINK_INTERVAL_MS);
+  obstacleBlinkTimerId = <number>(<unknown>setInterval(() => {
+    if (gameLevel) {
+      for (const obstacle of gameLevel?.getLevel(currentGameLevel).obstacles) {
+        let pos = obstacle.getArrayPosition();
+        screen.value[pos] = !screen.value[pos];
+      }
+    }
+  }, OBSTACLE_BLINK_INTERVAL_MS));
 }
 
+function getPointClass(state: boolean, index: number): Array<string> {
+  const classes = [];
+
+  if (debugState.isDebugModeEnabled.value && wallsDefinition) {
+    classes.push("w-" + wallsDefinition.matrix[index]);
+  }
+
+  if (state) {
+    classes.push("active");
+  }
+
+  return classes;
+}
 </script>
 <template>
-    <div class="module card-module labyrinth-module">
-        <div class="content">
-            <div class="screen">
-                <div v-for="(state, index) in screen" class="point" :class="{active: state}"/>
-            </div>
+  <div class="module card-module labyrinth-module">
+    <div class="content">
+      <FramedLabel
+        top="35px"
+        left="75px"
+        height="230px"
+        width="230px"
+        text="MATRIX"
+        radius="8px"
+      />
 
-            <div class="label matrix-label">MATRIX</div>
-
-            <div class="button up" @click="move(LabyrinthDirection.UP)">
-                <div class="round-border"/>
-                <div class="label">UP</div>
-            </div>
-
-            <div class="button down" @click="move(LabyrinthDirection.DOWN)">
-                <div class="round-border"/>
-                <div class="label">DOWN</div>
-            </div>
-
-            <div class="button left" @click="move(LabyrinthDirection.LEFT)">
-                <div class="round-border"/>
-                <div class="label">LEFT</div>
-            </div>
-
-            <div class="button right" @click="move(LabyrinthDirection.RIGHT)">
-                <div class="round-border"/>
-                <div class="label">RIGHT</div>
-            </div>
-
+      <div class="screen">
+        <div
+          v-for="(state, index) in screen"
+          class="point"
+          :class="getPointClass(state, index)"
+        >
+          <div />
         </div>
-        <ModuleStatusIndicator
-                :is-armed="state.isArmed.value"
-                :is-disarmed="state.isDisarmed.value"
-        />
+      </div>
+
+      <div class="button up" @click="move(LabyrinthDirection.UP)">
+        <div class="round-border" />
+        <div class="label">UP</div>
+      </div>
+
+      <div class="button down" @click="move(LabyrinthDirection.DOWN)">
+        <div class="round-border" />
+        <div class="label">DOWN</div>
+      </div>
+
+      <div class="button left" @click="move(LabyrinthDirection.LEFT)">
+        <div class="round-border" />
+        <div class="label">LEFT</div>
+      </div>
+
+      <div class="button right" @click="move(LabyrinthDirection.RIGHT)">
+        <div class="round-border" />
+        <div class="label">RIGHT</div>
+      </div>
     </div>
+    <ModuleStatusIndicator
+      :is-armed="state.isArmed.value"
+      :is-disarmed="state.isDisarmed.value"
+      :strike-number="strikeNumber"
+    />
+  </div>
 </template>

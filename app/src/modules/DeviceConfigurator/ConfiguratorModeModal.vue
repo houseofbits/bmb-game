@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import * as devicePresets from "@src/config/devicePresets.json";
+import devicePresets from "@src/config/devicePresets";
 
 const emit = defineEmits(["apply", "close", "select-custom"]);
 
@@ -12,6 +12,7 @@ const presets: Array<string> = devicePresets.map((preset) => {
 });
 
 function apply(): void {
+  console.log(devicePresets);
   const index = devicePresets.findIndex((preset) => {
     return preset.name === selectedPreset.value;
   });

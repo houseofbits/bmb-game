@@ -7,6 +7,13 @@ $module-height: 300px;
   font-size: 12px;
 }
 
+.debug-button {
+  position: absolute;
+  top:0;
+  left: 0;
+  padding-left: 16px;
+}
+
 .box-center-wrapper {
   display: flex;
   justify-content: center;
@@ -205,7 +212,7 @@ $module-height: 300px;
       height: 140px;
       background-color: #e8e8e8;
       border-radius: 8px;
-      margin:4px;
+      margin: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -219,4 +226,23 @@ $module-height: 300px;
   }
 }
 
+.framed-label {
+  border: solid 2px rgba(255, 255, 255, 0.8);
+  position: absolute;
+
+  & .label-wrapper {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+
+    & .label {
+      background-color: #c2c2c2;
+      padding-left: 4px;
+      padding-right: 4px;
+    }
+  }
+}
 
