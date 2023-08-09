@@ -17,9 +17,9 @@ const isDocumentationVisible = ref(false);
 
 onMounted(() => {
   deviceState.buildFromParams(
-    devicePresets[0].width,
-    devicePresets[0].height,
-    devicePresets[0].modules,
+    devicePresets[2].width,
+    devicePresets[2].height,
+    devicePresets[2].modules,
   );
 });
 </script>
