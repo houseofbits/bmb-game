@@ -246,3 +246,42 @@ $module-height: 300px;
   }
 }
 
+.seven-segment-body {
+  position: absolute;
+  background-color: #505050;
+  width: 70px;
+  height: 120px;
+  border-radius: 3px;
+
+  & .seven-segment {
+    position: absolute;
+    transform: skew(-6deg);
+
+    & .glow-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: all 300ms;
+
+      & .segment {
+        top: 0;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: #838383;
+        transition: all 300ms;
+      }
+
+      &.active {
+        filter: drop-shadow(0 0 2px rgba(255, 255, 0, 1));
+
+        & .segment {
+          background-color: yellow;
+        }
+      }
+    }
+  }
+}

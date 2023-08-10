@@ -77,6 +77,11 @@ function disarm(color: SimonSaysColor): void {
       return;
     }
 
+    isColorActive.value[SimonSaysColor.RED] = true;
+    isColorActive.value[SimonSaysColor.GREEN] = true;
+    isColorActive.value[SimonSaysColor.YELLOW] = true;
+    isColorActive.value[SimonSaysColor.BLUE] = true;
+
     patternIndex.value--;
     pattern = getRandomPattern(props.difficulty);
     restartTimer();

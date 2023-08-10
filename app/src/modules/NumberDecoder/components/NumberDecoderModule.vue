@@ -9,6 +9,7 @@ import defineModuleState, {
 } from "@src/composables/defineModuleState";
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
 import defineDebugState from "@src/composables/defineDebugState";
+import SevenSegment from "@src/components/SevenSegment.vue";
 
 const emit = defineEmits(ModuleEmits);
 const props = defineProps(ModuleProps);
@@ -32,6 +33,7 @@ const DIFFICULTY_LEVELS = {
   [DifficultyLevel.IMPOSSIBLE]: 6,
 };
 
+let numberOfTries = 0;
 const numbersInput = ref<string>("");
 let maxNumbers: number = 4;
 let numberToGuess: string = "";
@@ -44,6 +46,7 @@ let numbersState: Array<NumberState> = [
 
 function armModule(): void {
   maxNumbers = DIFFICULTY_LEVELS[props.difficulty];
+  numberOfTries = 0;
   numberToGuess = generateNumberToGuess();
   initNumbersState();
 }
@@ -69,6 +72,12 @@ function checkState(): boolean {
     state.emitDisarmed();
 
     return true;
+  }
+
+  numberOfTries++;
+
+  if (numberOfTries > 11) {
+    state.emitFailed();
   }
 
   return false;
@@ -118,26 +127,38 @@ function generateNumberToGuess(): string {
 
   return sub;
 }
+
+function getCharacter(index: number): string {
+  if (index > maxNumbers - 1) {
+    return "-";
+  }
+  if (numbersInput.value.length == 0) {
+    if (numbersState[index] === NumberState.PARTIAL) {
+      return "_";
+    }
+    if (numbersState[index] === NumberState.CORRECT) {
+      return "c";
+    }
+  }
+  const numericArray = numbersInput.value.split("");
+  return numericArray[index] ?? "";
+}
 </script>
 <template>
   <div class="module card-module">
     <div class="content">
       <div v-if="debugState.isDebugModeEnabled.value">{{ numberToGuess }}</div>
 
-      <div class="led-indicators">
-        <div
-          v-for="(state, index) in numbersState"
-          :key="index"
-          class="led"
-          :class="{
-            white: state === NumberState.PARTIAL,
-            green: state === NumberState.CORRECT,
-          }"
+      <div class="number-display">
+        <SevenSegment
+          v-for="(n, index) in 6"
+          class="digit"
+          :character="getCharacter(index)"
+          :width="40"
+          :height="60"
+          :padding="7"
+          :segment-size="5"
         />
-      </div>
-
-      <div class="numbers-input">
-        {{ numbersInput }}
       </div>
 
       <div class="keypad">
