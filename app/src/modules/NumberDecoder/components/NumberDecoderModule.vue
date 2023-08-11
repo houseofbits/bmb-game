@@ -33,6 +33,13 @@ const DIFFICULTY_LEVELS = {
   [DifficultyLevel.IMPOSSIBLE]: 6,
 };
 
+const NUMBER_OF_ATTEMPTS = {
+  [DifficultyLevel.EASY]: 11,
+  [DifficultyLevel.AVERAGE]: 9,
+  [DifficultyLevel.HARD]: 5,
+  [DifficultyLevel.IMPOSSIBLE]: 5,
+};
+
 let numberOfTries = 0;
 const numbersInput = ref<string>("");
 let maxNumbers: number = 4;
@@ -43,6 +50,7 @@ let numbersState: Array<NumberState> = [
   NumberState.INCORRECT,
   NumberState.INCORRECT,
 ];
+const strikeNumber = ref<number>(0);
 
 function armModule(): void {
   maxNumbers = DIFFICULTY_LEVELS[props.difficulty];
@@ -76,8 +84,15 @@ function checkState(): boolean {
 
   numberOfTries++;
 
-  if (numberOfTries > 11) {
-    state.emitFailed();
+  if (numberOfTries > NUMBER_OF_ATTEMPTS[props.difficulty]) {
+    if (
+      strikeNumber.value > 1 ||
+      props.difficulty === DifficultyLevel.IMPOSSIBLE
+    ) {
+      state.emitFailed();
+    } else {
+      strikeNumber.value++;
+    }
   }
 
   return false;
@@ -223,6 +238,7 @@ function getCharacter(index: number): string {
     <ModuleStatusIndicator
       :is-armed="state.isArmed.value"
       :is-disarmed="state.isDisarmed.value"
+      :strike-number="strikeNumber"
     />
   </div>
 </template>

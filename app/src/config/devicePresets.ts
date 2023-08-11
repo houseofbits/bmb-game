@@ -1,5 +1,11 @@
 export default [
   {
+    name: "Test MOrse code",
+    width: 1,
+    height: 2,
+    modules: ["timer", "morseCode"],
+  },
+  {
     name: "Test Labyrinth",
     width: 1,
     height: 2,
@@ -33,10 +39,10 @@ export default [
       "timer",
       "simonSays",
       "wireMatcher",
-      "placeholder",
-      "placeholder",
-      "placeholder",
-      "placeholder",
+      "morseCode",
+      "wireMatcher",
+      "labyrinth",
+      "numberDecoder",
     ],
   },
 ];

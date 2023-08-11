@@ -1,0 +1,43 @@
+
+.morse-code-module {
+  & .content {
+    position: relative;
+
+  }
+}
+
+.rotary-switch {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #8f8e8e;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:active {
+    background-color: #6e6e6e;
+  }
+}
+
+.large-push-button {
+  position: absolute;
+  top: 13px;
+  left: 13px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #b93d3d;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:active {
+    background-color: #a80000;
+  }
+}

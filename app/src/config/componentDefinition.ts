@@ -5,6 +5,7 @@ import LabyrinthModule from "@src/modules/Labyrinth/components/LabyrinthModule.v
 import WireMatcherModule from "@src/modules/WireMatcher/components/WireMatcherModule.vue";
 import NumberDecoderModule from "@src/modules/NumberDecoder/components/NumberDecoderModule.vue";
 import { markRaw } from "vue";
+import MorseCodeModule from "@src/modules/MorseCode/components/MorseCodeModule.vue";
 
 const modulesComponentNameMap: { [name: string]: any } = {
   placeholder: PlaceholderModule,
@@ -13,6 +14,7 @@ const modulesComponentNameMap: { [name: string]: any } = {
   labyrinth: LabyrinthModule,
   wireMatcher: WireMatcherModule,
   numberDecoder: NumberDecoderModule,
+  morseCode: MorseCodeModule,
 };
 
 export default function getModuleComponent(name: string): any {

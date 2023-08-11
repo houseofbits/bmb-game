@@ -1,10 +1,19 @@
-
-@keyframes blinkingBackground{
-  0%		{ background-color: #c2c2c2;}
-  25%		{ background-color: #e00c0c;}
-  50%		{ background-color: #c2c2c2;}
-  75%		{ background-color: #e00c0c;}
-  100%	    { background-color: #c2c2c2;}
+@keyframes blinkingBackground {
+  0% {
+    background-color: #c2c2c2;
+  }
+  25% {
+    background-color: #e00c0c;
+  }
+  50% {
+    background-color: #c2c2c2;
+  }
+  75% {
+    background-color: #e00c0c;
+  }
+  100% {
+    background-color: #c2c2c2;
+  }
 }
 
 .timer-module {
@@ -13,7 +22,9 @@
   align-items: center;
   justify-content: center;
 
+
   & .content {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -25,18 +36,41 @@
     }
 
     & .serial-number {
-      font-weight: bolder;
-      font-size: 40px;
-      text-shadow: -1px -1px 1px #fff, 1px 1px 1px #000;
-      color: #9c8468;
-      opacity: 0.4;
-    }
+      position: absolute;
+      width: 100%;
+      height: auto;
+      top: 75px;
+      display: flex;
+      justify-content: center;
 
-    & .timer-text {
-      border: solid 3px rgba(0,0,0,0.2);
-      padding: 4px;
-      border-radius: 8px;
-      background-color: rgba(0,0,0,0.1);
+      & div {
+        font-weight: bolder;
+        font-size: 40px;
+        text-shadow: -1px -1px 1px #fff, 1px 1px 1px #000;
+        color: #9c8468;
+        opacity: 0.4;
+      }
     }
+  }
+}
+
+.seven-segment-timer {
+  position: absolute;
+  top: 145px;
+  left: 80px;
+  width: 250px;
+  min-width: 250px;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+
+  & .digit {
+    position: relative;
+    box-shadow: -1px 4px 1px rgba(0, 0, 0, 0.2), 1px 4px 1px rgba(0, 0, 0, 0.2);
+  }
+
+  & .divider {
+    width: 20px;
+    height: 80px;
   }
 }

@@ -99,7 +99,7 @@ onMounted(() => {
     width.value - padding.value * 2,
     height.value - padding.value * 2,
     props.segmentSize,
-    props.segmentSize / 4,
+    props.segmentSize / 3,
   );
   styleA = createClipPathStyle(segments.pointsA);
   styleB = createClipPathStyle(segments.pointsB);
