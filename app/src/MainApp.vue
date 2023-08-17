@@ -9,6 +9,8 @@ import devicePresets from "@src/config/devicePresets";
 import defineDeviceState from "@src/composables/defineDeviceState";
 import defineDebugState from "@src/composables/defineDebugState";
 
+const packageVersion = require("/package.json").version;
+
 const deviceState = defineDeviceState();
 const debugState = defineDebugState();
 
@@ -39,6 +41,8 @@ onMounted(() => {
       label="DEBUG MODE"
     ></v-switch>
   </div>
+
+  <div class="version-number">v{{ packageVersion }}</div>
 
   <DeviceConfigurator
     v-if="isDeviceConfiguratorVisible"
