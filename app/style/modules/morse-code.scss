@@ -9,7 +9,7 @@
 .rotary-switch {
   position: absolute;
   top: 13px;
-  left: 13px;
+  right: 13px;
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -27,7 +27,7 @@
 .large-push-button {
   position: absolute;
   top: 13px;
-  left: 13px;
+  right: 13px;
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -39,5 +39,80 @@
 
   &:active {
     background-color: #a80000;
+  }
+}
+
+.led-row {
+  display: flex;
+  padding: 8px;
+  & .led-indicator {
+    width: 18px;
+    height: 18px;
+    border-radius: 50px;
+    border: solid 2px white;
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.3);
+    margin-right: 8px;
+    transition: all 200ms;
+
+    &.active {
+      background-color: white;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+    }
+  }
+}
+
+.beep-switch {
+  position: absolute;
+  top: 240px;
+  left: 60px;
+  width: 40px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #656565;
+  transition: all 200ms;
+  cursor: pointer;
+  box-shadow: inset 0 2px 2px rgba(0,0,0,0.7);
+
+  & div {
+    pointer-events: none;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #b6b6b6;
+    transition: all 200ms;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.7);
+  }
+
+  &.active {
+    & div{
+      left: 22px;
+      background-color: white;
+    }
+  }
+}
+
+.transmit-indicator {
+  position: absolute;
+  top: 5px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+
+  & .led {
+    width: 20px;
+    height: 10px;
+    background-color: #656565;
+    transition: all 300ms;
+
+    &.active {
+      background-color: yellow;
+      box-shadow: 0 0 10px yellow;
+    }
   }
 }
