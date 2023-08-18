@@ -5,20 +5,18 @@ import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
 const deviceState = defineDeviceState();
 </script>
 <template>
-  <div class="device">
-    <div
-      class="device-row"
-      :class="['device-width-' + deviceState.modulesWidth.value]"
-    >
-      <component
-        v-for="(module, index) in deviceState.modules.value"
-        :is="module.component"
-        :index="index"
-        :status="module.state"
-        :difficulty="deviceState.difficultyLevel.value"
-        @disarm="() => deviceState.disarmModule(index)"
-        @fail="() => deviceState.failModule(index)"
-      />
-    </div>
+  <div
+    class="device"
+    :class="['device-width-' + deviceState.modulesWidth.value]"
+  >
+    <component
+      v-for="(module, index) in deviceState.modules.value"
+      :is="module.component"
+      :index="index"
+      :status="module.state"
+      :difficulty="deviceState.difficultyLevel.value"
+      @disarm="() => deviceState.disarmModule(index)"
+      @fail="() => deviceState.failModule(index)"
+    />
   </div>
 </template>

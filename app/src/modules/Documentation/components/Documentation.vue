@@ -1,6 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import MorseCodeDocumentation from "@src/modules/Documentation/components/MorseCodeDocumentation.vue";
+</script>
 <template>
-  <v-card width="1000px" class="pb-15">
+  <v-card width="1000px" class="docs-container pb-15">
     <v-card-title class="text-h3 mt-6">Bomb defusion manual</v-card-title>
     <v-card-text class="text-body-1 mt-3">
       <p>
@@ -102,5 +104,7 @@
       <p class="mt-2">HARD: 5 numbers, 5 attempts and 2 strikes</p>
       <p class="mt-2">IMPOSSIBLE: 6 numbers, 5 attempts and no strikes</p>
     </v-card-text>
+
+    <MorseCodeDocumentation />
   </v-card>
 </template>

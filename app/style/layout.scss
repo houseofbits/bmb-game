@@ -7,79 +7,68 @@ $module-height: 300px;
   font-size: 12px;
 }
 
-.debug-button {
-  position: absolute;
-  top:0;
-  left: 0;
-  padding-left: 16px;
-}
-
-.version-number {
-  position: absolute;
-  top:0;
-  right:0;
-  width: auto;
-  color: lightgrey;
-  padding: 8px;
-}
-
 .box-center-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 56px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  overflow: auto;
+  padding:0;
+  margin:0;
 }
 
 .device {
-  padding: 0;
-  margin: 0;
+  padding: 6px;
   display: flex;
-  flex-direction: column;
-  width: auto;
+  flex-direction: row;
   height: auto;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: auto 0;
 
-  & .device-row {
+  &.device-width-1 {
+    max-width: ($module-width * 1)+10;
+  }
+
+  &.device-width-2 {
+    max-width: ($module-width * 2)+30;
+  }
+
+  &.device-width-3 {
+    max-width: ($module-width * 3)+50;
+  }
+
+  &.device-width-4 {
+    max-width: ($module-width * 4)+80;
+  }
+
+  & .module {
+    box-sizing: border-box;
+    background: lightgrey;
+    width: $module-width;
+    height: $module-height;
+    min-width: $module-width;
+    min-height: $module-height;
+    margin: 2px;
+    border-radius: 12px;
+    overflow: hidden;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    border: 1px solid #e7e7e7;
+    border-bottom: 2px solid #8f8e8e;
+    border-right: 1px solid #8f8e8e;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 
-    &.device-width-1 {
-      max-width: ($module-width * 1)+4;
-    }
-
-    &.device-width-2 {
-      max-width: ($module-width * 2)+8;
-    }
-
-    &.device-width-3 {
-      max-width: ($module-width * 3)+12;
-    }
-
-    &.device-width-4 {
-      max-width: ($module-width * 4)+16;
-    }
-
-    & .module {
-      box-sizing: border-box;
-      background: lightgrey;
-      width: $module-width;
-      height: $module-height;
-      margin: 2px;
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: row;
-      border: 1px solid #e7e7e7;
-      border-bottom: 2px solid #8f8e8e;
-      border-right: 1px solid #8f8e8e;
-      border-top: 1px solid #ddd;
-      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
-
-      & .content {
-        flex-grow: 1;
-        height: 100%;
-        background: #c2c2c2;
-      }
+    & .content {
+      flex-grow: 1;
+      height: 100%;
+      background: #c2c2c2;
     }
   }
 }

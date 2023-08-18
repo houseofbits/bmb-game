@@ -3,19 +3,17 @@ import Box from "@src/components/Box.vue";
 import { onMounted, ref } from "vue";
 import Toolbar from "@src/components/Toolbar.vue";
 import "@style/documentation.scss";
-import Documentation from "@src/components/Documentation.vue";
 import DeviceConfigurator from "@src/modules/DeviceConfigurator/DeviceConfigurator.vue";
 import devicePresets from "@src/config/devicePresets";
 import defineDeviceState from "@src/composables/defineDeviceState";
-import defineDebugState from "@src/composables/defineDebugState";
-
-const packageVersion = require("/package.json").version;
+import Documentation from "@src/modules/Documentation/components/Documentation.vue";
+import AboutModal from "@src/components/AboutModal.vue";
 
 const deviceState = defineDeviceState();
-const debugState = defineDebugState();
 
 const isDeviceConfiguratorVisible = ref(false);
 const isDocumentationVisible = ref(false);
+const isAboutModalVisible = ref(false);
 
 onMounted(() => {
   deviceState.buildFromParams(
@@ -26,7 +24,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div v-if="isDocumentationVisible" class="box-center-wrapper">
+  <div v-if="isDocumentationVisible" class="box-center-wrapper pa-3">
     <Documentation />
   </div>
 
@@ -34,23 +32,16 @@ onMounted(() => {
     <Box />
   </div>
 
-  <div class="debug-button">
-    <v-switch
-      v-model="debugState.isDebugModeEnabled.value"
-      hide-details
-      label="DEBUG MODE"
-    ></v-switch>
-  </div>
-
-  <div class="version-number">v{{ packageVersion }}</div>
-
   <DeviceConfigurator
     v-if="isDeviceConfiguratorVisible"
     @close="isDeviceConfiguratorVisible = false"
   />
 
+  <AboutModal v-if="isAboutModalVisible" @close="isAboutModalVisible = false" />
+
   <Toolbar
     @create-configuration="isDeviceConfiguratorVisible = true"
     @documentation="isDocumentationVisible = !isDocumentationVisible"
+    @about="isAboutModalVisible = true"
   />
 </template>

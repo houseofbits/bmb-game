@@ -11,39 +11,14 @@ import FramedLabel from "@src/components/FramedLabel.vue";
 import Label from "@src/components/Label.vue";
 import getRandomLevel from "@src/modules/MorseCode/helpers/levels";
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
+import Alphabet from "@src/modules/MorseCode/helpers/alphabet";
+import {
+  OperationMode,
+  Signal,
+  SignalTiming,
+} from "@src/modules/MorseCode/helpers/constants";
 
 const intervalMs = 200;
-
-enum OperationMode {
-  RECEIVE,
-  TRANSMIT,
-  PRACTICE,
-}
-
-enum Signal {
-  DIT = 1,
-  DAH = 2,
-  DIT_SPACE = 3,
-  CHAR_SPACE = 4,
-  WORD_SPACE = 5,
-}
-
-const SignalTiming = {
-  [Signal.DIT]: 1,
-  [Signal.DAH]: 3,
-  [Signal.DIT_SPACE]: 1,
-  [Signal.CHAR_SPACE]: 3,
-  [Signal.WORD_SPACE]: 7,
-};
-
-const Alphabet: { [char: string]: Array<Signal> } = {
-  A: [Signal.DIT, Signal.DAH],
-  B: [Signal.DAH, Signal.DIT, Signal.DIT, Signal.DIT],
-  C: [Signal.DAH, Signal.DIT, Signal.DAH, Signal.DIT],
-  D: [Signal.DAH, Signal.DIT, Signal.DIT],
-  E: [Signal.DIT],
-  F: [Signal.DIT, Signal.DIT, Signal.DAH, Signal.DIT],
-};
 
 const emit = defineEmits(ModuleEmits);
 const props = defineProps(ModuleProps);
@@ -329,6 +304,9 @@ onMounted(() => {
           @mousedown="transmit(true)"
           @mouseup="transmit(false)"
           @mouseleave="transmit(false)"
+          @touchstart="transmit(true)"
+          @touchend="transmit(false)"
+          @touchcancel="transmit(false)"
         >
           SEND
         </div>
