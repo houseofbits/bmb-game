@@ -57,13 +57,11 @@ function armModule(): void {
 
 function disarm(color: SimonSaysColor): void {
   if (state.isArmed.value) {
-    clearColors();
-    clearTimeout(timerId);
-
     if (!pattern?.isCorrect(color)) {
       if (strikeNumber.value > 1) {
+        clearTimeout(timerId);
+        clearColors();
         state.emitFailed();
-        // failedPatternIndexes.value.push(patternIndex.value);
       } else {
         strikeNumber.value++;
       }
@@ -71,16 +69,21 @@ function disarm(color: SimonSaysColor): void {
       return;
     }
 
-    //Is last pattern has been solved, mark game as completed
-    if (patternIndex.value == 0) {
-      state.emitDisarmed();
-      return;
-    }
-
     isColorActive.value[SimonSaysColor.RED] = true;
     isColorActive.value[SimonSaysColor.GREEN] = true;
     isColorActive.value[SimonSaysColor.YELLOW] = true;
     isColorActive.value[SimonSaysColor.BLUE] = true;
+
+    //Is last pattern has been solved, mark game as completed
+    if (patternIndex.value == 0) {
+      clearTimeout(timerId);
+      setTimeout(clearColors, REPETITION_INTERVAL_MS);
+      state.emitDisarmed();
+      return;
+    }
+
+    clearTimeout(timerId);
+    clearColors();
 
     patternIndex.value--;
     pattern = getRandomPattern(props.difficulty);
@@ -119,17 +122,6 @@ function clearColors(): void {
   isColorActive.value[SimonSaysColor.YELLOW] = false;
   isColorActive.value[SimonSaysColor.BLUE] = false;
 }
-
-// function isPatternActive(index: number): boolean {
-//   return (
-//     (state.isFailed.value || state.isArmed.value) &&
-//     index < patternSet.value.length - patternIndex.value
-//   );
-// }
-
-// function isPatternFailed(index: number): boolean {
-//   return false; //failedPatternIndexes.value.includes(index);
-// }
 
 function restartModule(): void {
   patternIndex.value = 0;
@@ -189,10 +181,6 @@ function generatePatterns(numElements: number): string {
 
   return output.join("\n");
 }
-
-// onMounted(() => {
-//   console.log(generatePatterns(5));
-// });
 </script>
 <template>
   <div class="module simon-says-module">

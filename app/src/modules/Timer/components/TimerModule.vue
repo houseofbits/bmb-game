@@ -88,8 +88,8 @@ function restart(): void {
   isDisarmed.value = false;
   isFailed.value = false;
   timerCounter.value = 0;
-  selectedMode.value = "";
-  selectedDifficulty = null;
+  // selectedMode.value = "";
+  // selectedDifficulty = null;
   serialNumber.value = null;
   deviceState.markFinishedModulesReady();
 }

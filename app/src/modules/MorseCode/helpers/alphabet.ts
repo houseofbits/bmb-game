@@ -33,3 +33,13 @@ const Alphabet: { [char: string]: Array<Signal> } = {
 };
 
 export default Alphabet;
+
+export function getSignalDebugString(letter: string): string {
+  let result = "";
+
+  for (const part of Alphabet[letter]) {
+    result += part === Signal.DIT ? " •" : " —";
+  }
+
+  return result;
+}

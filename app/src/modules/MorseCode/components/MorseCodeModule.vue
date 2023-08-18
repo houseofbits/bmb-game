@@ -11,7 +11,9 @@ import FramedLabel from "@src/components/FramedLabel.vue";
 import Label from "@src/components/Label.vue";
 import getRandomLevel from "@src/modules/MorseCode/helpers/levels";
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
-import Alphabet from "@src/modules/MorseCode/helpers/alphabet";
+import Alphabet, {
+  getSignalDebugString,
+} from "@src/modules/MorseCode/helpers/alphabet";
 import {
   OperationMode,
   Signal,
@@ -33,7 +35,6 @@ let audioContext: AudioContext | null = null;
 let oscillatorNode: OscillatorNode;
 let gainNode: GainNode;
 const strikeNumber = ref<number>(0);
-const isTransmitEnabled = ref(false);
 const isBeepEnabled = ref(false);
 const isRXOn = ref(false);
 const isTXOn = ref(false);
@@ -47,11 +48,12 @@ let txButtonOn: boolean = false;
 let txTicks: number = 0;
 let transmitSignalIndicator = ref(0);
 const mode = ref<OperationMode>(OperationMode.RECEIVE);
-const level = getRandomLevel(DifficultyLevel.EASY);
+let level = getRandomLevel(DifficultyLevel.EASY);
 
 function armModule(): void {
   rxSignal = createSignal(level.question);
   strikeNumber.value = 0;
+  level = getRandomLevel(props.difficulty);
 }
 
 function restartModule(): void {}
@@ -85,6 +87,26 @@ function transmit(on: boolean): void {
 function setMode(selectedMode: OperationMode): void {
   if (state.isArmed.value) {
     mode.value = selectedMode;
+    setBeepOn(false);
+    rxSignalIndex = 0;
+    transmittedSignal = [];
+    isRXOn.value = false;
+  }
+}
+
+function toggleMode(): void {
+  if (state.isArmed.value) {
+    switch (mode.value) {
+      case OperationMode.RECEIVE:
+        mode.value = OperationMode.TRANSMIT;
+        break;
+      case OperationMode.TRANSMIT:
+        mode.value = OperationMode.PRACTICE;
+        break;
+      case OperationMode.PRACTICE:
+        mode.value = OperationMode.RECEIVE;
+        break;
+    }
   }
 }
 
@@ -195,16 +217,6 @@ watch(
   },
 );
 
-watch(
-  () => isTransmitEnabled.value,
-  (value: boolean) => {
-    setBeepOn(false);
-    rxSignalIndex = 0;
-    transmittedSignal = [];
-    isRXOn.value = false;
-  },
-);
-
 const modeClass = computed(() => {
   switch (mode.value) {
     case OperationMode.RECEIVE:
@@ -257,6 +269,11 @@ onMounted(() => {
 <template>
   <div class="module morse-code-module">
     <div class="content">
+      <div v-if="debugState.isDebugModeEnabled.value">
+        {{ level.question }} | {{ level.answer }} |
+        {{ getSignalDebugString(level.answer) }}
+      </div>
+
       <FramedLabel
         radius="8px"
         left="170px"
@@ -275,10 +292,7 @@ onMounted(() => {
           >PRACTICE</Label
         >
 
-        <div
-          class="rotary-switch"
-          @click="isTransmitEnabled = !isTransmitEnabled"
-        >
+        <div class="rotary-switch" @click="toggleMode">
           {{ modeClass }}
         </div>
       </FramedLabel>
