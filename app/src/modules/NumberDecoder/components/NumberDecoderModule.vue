@@ -34,15 +34,15 @@ const DIFFICULTY_LEVELS = {
 };
 
 const NUMBER_OF_ATTEMPTS = {
-  [DifficultyLevel.EASY]: 11,
+  [DifficultyLevel.EASY]: 5,
   [DifficultyLevel.AVERAGE]: 9,
   [DifficultyLevel.HARD]: 5,
   [DifficultyLevel.IMPOSSIBLE]: 5,
 };
 
-let numberOfTries = 0;
+const numberOfTries = ref(0);
 const numbersInput = ref<string>("");
-let maxNumbers: number = 4;
+let maxNumbers: number = 0;
 let numberToGuess: string = "";
 let numbersState: Array<NumberState> = [
   NumberState.INCORRECT,
@@ -54,7 +54,7 @@ const strikeNumber = ref<number>(0);
 
 function armModule(): void {
   maxNumbers = DIFFICULTY_LEVELS[props.difficulty];
-  numberOfTries = 0;
+  numberOfTries.value = 0;
   numberToGuess = generateNumberToGuess();
   initNumbersState();
 }
@@ -78,13 +78,13 @@ function checkState(): boolean {
   }
   if (numbersInput.value === numberToGuess) {
     state.emitDisarmed();
-
+    numbersInput.value = "";
     return true;
   }
 
-  numberOfTries++;
+  numberOfTries.value++;
 
-  if (numberOfTries > NUMBER_OF_ATTEMPTS[props.difficulty]) {
+  if (numberOfTries.value > NUMBER_OF_ATTEMPTS[props.difficulty]) {
     if (
       strikeNumber.value > 1 ||
       props.difficulty === DifficultyLevel.IMPOSSIBLE
@@ -162,7 +162,9 @@ function getCharacter(index: number): string {
 <template>
   <div class="module card-module">
     <div class="content">
-      <div v-if="debugState.isDebugModeEnabled.value">{{ numberToGuess }}</div>
+      <div v-if="debugState.isDebugModeEnabled.value">
+        {{ numberToGuess }} | {{ numberOfTries }} | {{ strikeNumber }}
+      </div>
 
       <div class="number-display">
         <SevenSegment

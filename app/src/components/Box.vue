@@ -1,8 +1,20 @@
 <script setup lang="ts">
 import defineDeviceState from "@src/composables/defineDeviceState";
-import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
+import { ref, watch } from "vue";
 
 const deviceState = defineDeviceState();
+
+const id = ref(0);
+watch(
+  () => deviceState.modules.value,
+  () => {
+    id.value++;
+  },
+);
+
+function getModuleKey(index: number): number {
+  return index + id.value;
+}
 </script>
 <template>
   <div
@@ -12,6 +24,7 @@ const deviceState = defineDeviceState();
     <component
       v-for="(module, index) in deviceState.modules.value"
       :is="module.component"
+      :key="getModuleKey(index)"
       :index="index"
       :status="module.state"
       :difficulty="deviceState.difficultyLevel.value"

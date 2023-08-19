@@ -42,16 +42,19 @@ const isColorActive = ref({
   [SimonSaysColor.BLUE]: false,
 });
 
-function restartTimer(): void {
-  patternColorIndex = 0;
-  clearTimeout(timerId);
-  timerId = <number>(<unknown>setTimeout(patternOn, REPETITION_INTERVAL_MS));
+function restartTimer(initialDelay: number = 0): void {
+  setTimeout(() => {
+    clearColors();
+    patternColorIndex = 0;
+    clearTimeout(timerId);
+    timerId = <number>(<unknown>setTimeout(patternOn, 300));
+  }, initialDelay);
 }
 
 function armModule(): void {
   patternIndex.value = _.random(1, 4);
   failedPatternIndexes.value = [];
-  restartTimer();
+  restartTimer(_.random(REPETITION_INTERVAL_MS * 0.2, REPETITION_INTERVAL_MS));
   pattern = getRandomPattern(props.difficulty);
 }
 
@@ -69,6 +72,9 @@ function disarm(color: SimonSaysColor): void {
       return;
     }
 
+    clearTimeout(timerId);
+    clearColors();
+
     isColorActive.value[SimonSaysColor.RED] = true;
     isColorActive.value[SimonSaysColor.GREEN] = true;
     isColorActive.value[SimonSaysColor.YELLOW] = true;
@@ -82,12 +88,9 @@ function disarm(color: SimonSaysColor): void {
       return;
     }
 
-    clearTimeout(timerId);
-    clearColors();
-
     patternIndex.value--;
     pattern = getRandomPattern(props.difficulty);
-    restartTimer();
+    restartTimer(REPETITION_INTERVAL_MS);
   }
 }
 
