@@ -2,7 +2,7 @@ import { computed, reactive, ref } from "vue";
 import { ModuleState } from "@src/helpers/ModuleState";
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
 import ModuleStructure from "@src/structures/ModuleStructure";
-import getModuleComponent from "@src/config/componentDefinition";
+import { getModuleComponent } from "@src/config/moduleDefinition";
 
 let modules = ref<Array<ModuleStructure>>([]);
 const modulesWidth = ref<number>(0);
@@ -91,7 +91,7 @@ export default () => {
         status = ModuleState.READY;
       }
 
-      return new ModuleStructure(getModuleComponent(name), status);
+      return new ModuleStructure(name, getModuleComponent(name), status);
     });
   }
 

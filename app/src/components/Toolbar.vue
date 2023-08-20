@@ -3,7 +3,7 @@ const emit = defineEmits(["create-configuration", "documentation", "about"]);
 </script>
 <template>
   <v-layout class="overflow-visible" style="height: 30px">
-    <v-bottom-navigation elevation="1">
+    <v-bottom-navigation elevation="1" grow>
       <v-btn value="new" @click="emit('create-configuration')">
         <svg
           xmlns="http://www.w3.org/2000/svg"

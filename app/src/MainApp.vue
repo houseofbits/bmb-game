@@ -24,12 +24,12 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div v-if="isDocumentationVisible" class="box-center-wrapper pa-3">
-    <Documentation />
+  <div class="box-center-wrapper">
+    <Box />
   </div>
 
-  <div v-else class="box-center-wrapper">
-    <Box />
+  <div v-if="isDocumentationVisible" class="box-center-wrapper pa-2">
+    <Documentation />
   </div>
 
   <DeviceConfigurator

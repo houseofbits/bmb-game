@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import boxConfigModuleDefinitions from "@src/config/boxConfigModuleDefinitions";
+import { moduleDefinition } from "@src/config/moduleDefinition";
 
 const emit = defineEmits(["close", "select"]);
 const isModalVisible = ref(true);
@@ -10,7 +10,7 @@ function close(): void {
 }
 
 function selectModule(index: number): void {
-  emit("select", boxConfigModuleDefinitions[index].name);
+  emit("select", moduleDefinition[index].name);
 }
 </script>
 <template>
@@ -20,7 +20,7 @@ function selectModule(index: number): void {
 
       <v-list style="max-height: 400px" class="overflow-y-auto">
         <v-list-item
-          v-for="(item, i) in boxConfigModuleDefinitions"
+          v-for="(item, i) in moduleDefinition"
           :key="i"
           :value="item"
           color="primary"

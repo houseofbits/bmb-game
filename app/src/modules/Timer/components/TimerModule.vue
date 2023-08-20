@@ -5,6 +5,7 @@ import gameModes from "@src/config/gameModes";
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
 import defineDeviceState from "@src/composables/defineDeviceState";
 import Timer from "@src/modules/Timer/components/Timer.vue";
+import { getModuleMaxSolvingTime } from "@src/config/moduleDefinition";
 
 const deviceState = defineDeviceState();
 
@@ -38,9 +39,21 @@ function arm(): void {
     serialNumber.value = generateSerialNumber(selectedDifficulty);
     isArmed.value = true;
     isDisarmed.value = false;
-    setTimer(120);
+    setTimer(calculateSolvingTime());
     deviceState.armReadyModules(selectedDifficulty);
   }
+}
+
+function calculateSolvingTime(): number {
+  let timeS = 0;
+  for (const module of deviceState.modules.value) {
+    timeS += getModuleMaxSolvingTime(
+      module.name,
+      deviceState.difficultyLevel.value,
+    );
+  }
+
+  return timeS;
 }
 
 function disarm(): void {

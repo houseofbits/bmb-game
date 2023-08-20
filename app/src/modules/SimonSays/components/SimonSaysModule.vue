@@ -26,7 +26,7 @@ state.onFailed(freezeModule);
 
 const PATTERN_OFF_INTERVAL_MS = 500;
 const PATTERN_ON_INTERVAL_MS = 600;
-const REPETITION_INTERVAL_MS = 1500;
+const REPETITION_INTERVAL_MS = 800;
 
 const patternIndex = ref(0);
 let patternColorIndex = 0;
