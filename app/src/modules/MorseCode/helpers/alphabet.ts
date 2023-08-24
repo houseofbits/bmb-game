@@ -34,12 +34,14 @@ const Alphabet: { [char: string]: Array<Signal> } = {
 
 export default Alphabet;
 
-export function getSignalDebugString(letter: string): string {
+export function getSignalDebugString(letters: string): string {
+  const lettersArray = letters.split("");
   let result = "";
-
-  for (const part of Alphabet[letter]) {
-    result += part === Signal.DIT ? " •" : " —";
+  for (const letter of lettersArray) {
+    for (const part of Alphabet[letter]) {
+      result += part === Signal.DIT ? " •" : " —";
+    }
+    result += "/";
   }
-
   return result;
 }

@@ -11,7 +11,7 @@ import defineModuleState, {
   ModuleEmits,
   ModuleProps,
 } from "@src/composables/defineModuleState";
-import FramedLabel from "@src/components/FramedLabel.vue";
+import Frame from "@src/components/Frame.vue";
 import defineDebugState from "@src/composables/defineDebugState";
 import _ from "lodash";
 
@@ -192,7 +192,7 @@ function generatePatterns(numElements: number): string {
         {{ pattern.correctAnswer }}
       </div>
 
-      <FramedLabel
+      <Frame
         left="60px"
         top="20px"
         height="125px"
@@ -200,7 +200,7 @@ function generatePatterns(numElements: number): string {
         radius="8px"
         text="GREEN"
       />
-      <FramedLabel
+      <Frame
         left="195px"
         top="20px"
         height="125px"
@@ -208,7 +208,7 @@ function generatePatterns(numElements: number): string {
         radius="8px"
         text="RED"
       />
-      <FramedLabel
+      <Frame
         left="60px"
         top="155px"
         height="125px"
@@ -216,7 +216,7 @@ function generatePatterns(numElements: number): string {
         radius="8px"
         text="YELLOW"
       />
-      <FramedLabel
+      <Frame
         left="195px"
         top="155px"
         height="125px"

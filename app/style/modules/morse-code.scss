@@ -13,11 +13,60 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: #8f8e8e;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(147.2deg, #A1ABCE 13.91%, #9AA5CC 88.39%);
+  border-bottom: solid 2px #235660;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+
+  &.receive > .rotary-switch-body > .rotary-switch-top {
+    transform: rotate(-45deg);
+  }
+
+  &.transmit > .rotary-switch-body > .rotary-switch-top {
+    transform: rotate(0deg);
+  }
+
+  &.practice > .rotary-switch-body > .rotary-switch-top {
+    transform: rotate(45deg);
+  }
+
+  & .rotary-switch-body {
+    pointer-events: none;
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    right: 8px;
+    bottom: 8px;
+    background: conic-gradient(from 180deg at 50% 50%, #282E45 0deg, #54618C 65deg, #CDD8FF 116.25deg, #6677B3 162.5deg, #282E45 360deg);
+    box-shadow: 2px 5px 2px rgba(0, 0, 0, 0.23);
+    border-radius: 50%;
+
+    & .rotary-switch-top {
+      box-sizing: border-box;
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      right: 10px;
+      bottom: 10px;
+      background: linear-gradient(180deg, #A4B6D9 0%, #ADC0E5 100%);
+      box-shadow: inset 0px -1px 1px rgba(0, 0, 0, 0.25);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 5px;
+      transition: all 300ms ease-in;
+
+      & svg {
+        fill: white;
+      }
+    }
+
+  }
+
 
   &:active {
     background-color: #6e6e6e;
@@ -31,20 +80,36 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: #b93d3d;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid #1F1F1F;
+  box-shadow: 0 1px 3px 0 rgba(#0F0F0F, .5),
+  inset 0 1px rgba(#FFF, .2);
+  background-size: auto 150%;
+  background: linear-gradient(#b75454, #771616) 0 100%;
 
   &:active {
-    background-color: #a80000;
+    color: #000;
+    background: #732222 0 50%;
+    box-shadow: inset 0 2px 3px rgba(black, .5), 0 1px 1px rgba(white, .1);
+
+    & svg {
+      opacity: 0.5;
+    }
+  }
+
+  & svg {
+    fill: white;
+    transition: all 100ms;
   }
 }
 
 .led-row {
   display: flex;
   padding: 8px;
+
   & .led-indicator {
     width: 18px;
     height: 18px;
@@ -63,15 +128,13 @@
 
 .beep-switch {
   position: absolute;
-  top: 240px;
-  left: 60px;
   width: 40px;
   height: 20px;
   border-radius: 10px;
   background-color: #656565;
   transition: all 200ms;
   cursor: pointer;
-  box-shadow: inset 0 2px 2px rgba(0,0,0,0.7);
+  box-shadow: inset 0 2px 2px rgba(0, 0, 0, 0.7);
 
   & div {
     pointer-events: none;
@@ -83,15 +146,22 @@
     border-radius: 50%;
     background-color: #b6b6b6;
     transition: all 200ms;
-    box-shadow: 0 2px 2px rgba(0,0,0,0.7);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.7);
   }
 
   &.active {
-    & div{
+    & div {
       left: 22px;
       background-color: white;
     }
   }
+}
+
+.beep-switch-icon {
+  position: absolute;
+  fill: white;
+  top: 28px;
+  left: 12px;
 }
 
 .transmit-indicator {
@@ -115,4 +185,40 @@
       box-shadow: 0 0 10px yellow;
     }
   }
+}
+
+.signal-display {
+  position: absolute;
+  top: 80px;
+  left: 17px;
+  width: 350px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 25px;
+  background-color: #656565;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+
+  & div {
+    background-color: #8f8e8e;
+    width: 15px;
+    height: 7px;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.4);
+    transition: all 50ms;
+
+    &.active {
+      background-color: yellow;
+      box-shadow: 0 0 5px yellow, 0 0 3px yellow;
+    }
+  }
+}
+
+.starting-point-symbol{
+  fill: white;
+  position: absolute;
+  top:105px;
+  left:340px;
 }

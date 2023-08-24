@@ -225,8 +225,11 @@ $module-height: 300px;
 }
 
 .framed-label {
-  border: solid 2px rgba(255, 255, 255, 0.8);
   position: absolute;
+
+  &.with-border {
+    border: solid 2px rgba(255, 255, 255, 0.8);
+  }
 
   & .label-wrapper {
     position: absolute;

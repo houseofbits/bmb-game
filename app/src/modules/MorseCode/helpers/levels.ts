@@ -2,7 +2,7 @@ import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
 import _ from "lodash";
 import Alphabet from "@src/modules/MorseCode/helpers/alphabet";
 
-const NumberOfCharactersInQuestion = {
+const NumberOfCharactersInQuestion: { [id: number]: number } = {
   [DifficultyLevel.EASY]: 2,
   [DifficultyLevel.AVERAGE]: 3,
   [DifficultyLevel.HARD]: 4,

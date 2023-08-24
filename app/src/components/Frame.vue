@@ -4,7 +4,7 @@ import { computed } from "vue";
 const props = defineProps({
   text: {
     type: String,
-    required: true,
+    default: null,
   },
   width: {
     type: String,
@@ -26,6 +26,10 @@ const props = defineProps({
     type: String,
     default: "0",
   },
+  hasBorder: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const frameStyle = computed(() => {
@@ -40,9 +44,13 @@ const frameStyle = computed(() => {
 });
 </script>
 <template>
-  <div class="framed-label" :style="frameStyle">
+  <div
+    class="framed-label"
+    :style="frameStyle"
+    :class="{ 'with-border': props.hasBorder }"
+  >
     <slot />
-    <div class="label-wrapper">
+    <div v-if="props.text" class="label-wrapper">
       <div class="label">{{ text }}</div>
     </div>
   </div>

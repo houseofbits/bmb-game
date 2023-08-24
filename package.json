@@ -1,6 +1,6 @@
 {
   "name": "bomb-game",
-  "version": "1.0.6",
+  "version": "0.0.6",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,9 @@
     "postcss": "^8.3.11",
     "postcss-loader": "^6.2.0",
     "postcss-preset-env": "^6.7.0",
+    "postcss-scss": "^4.0.7",
     "raw-loader": "^4.0.1",
+    "sass": "^1.66.1",
     "sass-loader": "^10.0.2",
     "source-map-loader": "^4.0.1",
     "ts-loader": "^9.2.6",
@@ -48,7 +50,8 @@
     "popper.js": "^1.16.1",
     "vue": "^3.2.21",
     "vue-router": "^4.0.12",
-    "vuetify": "^3.3.8"
+    "vuetify": "^3.3.8",
+    "webpack-plugin-vuetify": "^2.0.1"
   },
   "author": "",
   "license": "ISC"

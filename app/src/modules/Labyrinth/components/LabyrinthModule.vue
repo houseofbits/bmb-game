@@ -8,7 +8,7 @@ import defineModuleState, {
   ModuleEmits,
   ModuleProps,
 } from "@src/composables/defineModuleState";
-import FramedLabel from "@src/components/FramedLabel.vue";
+import Frame from "@src/components/Frame.vue";
 import { getRandomGameLevel } from "@src/modules/Labyrinth/helpers/gameLevels";
 import LabyrinthGame from "@src/modules/Labyrinth/structures/LabyrinthGame";
 import LabyrinthWalls from "@src/modules/Labyrinth/structures/LabyrinthWalls";
@@ -187,7 +187,7 @@ function getPointClass(state: boolean, index: number): Array<string> {
 <template>
   <div class="module card-module labyrinth-module">
     <div class="content">
-      <FramedLabel
+      <Frame
         top="35px"
         left="75px"
         height="230px"
