@@ -20,6 +20,8 @@ import {
   SignalTiming,
 } from "@src/modules/MorseCode/helpers/constants";
 import { isBoolean } from "lodash";
+import Line from "@src/components/Line.vue";
+import { logContainerMousePosition } from "@src/helpers/debugging";
 
 const CLOCK_TICKS = 10;
 const intervalMs = 600; //400 for hard difficulty
@@ -298,10 +300,39 @@ onUnmounted(() => {
         {{ getSignalDebugString(level.answer) }}
       </div>
 
-      <Label top="10px" left="20px">1 UNIT - DOT</Label>
-      <Label top="25px" left="20px">3 UNITS - DASH</Label>
-      <Label top="40px" left="20px">1 UNIT - SPACE BETWEEN DOTS & DASHES</Label>
-      <Label top="55px" left="20px">3 UNITS - SPACE BETWEEN LETTERS</Label>
+      <Label top="10px" left="20px">DOT - 1 UNIT</Label>
+      <Label top="25px" left="20px">DASH - 3 UNITS</Label>
+      <Label top="40px" left="20px">SPACE BETWEEN DOTS & DASHES - 1 UNIT</Label>
+      <Label top="55px" left="20px">SPACE BETWEEN LETTERS - 3 UNITS</Label>
+
+      <Line
+        :points="[
+          [348, 120],
+          [348, 162],
+          [334, 177],
+        ]"
+      />
+
+      <Line
+        :points="[
+          [85, 155],
+          [85, 160],
+        ]"
+      />
+
+      <Line
+        :points="[
+          [35, 177],
+          [41, 182],
+        ]"
+      />
+
+      <Line
+        :points="[
+          [134, 177],
+          [129, 182],
+        ]"
+      />
 
       <div class="signal-display">
         <div

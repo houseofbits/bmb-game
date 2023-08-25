@@ -286,3 +286,10 @@ $module-height: 300px;
     }
   }
 }
+
+.technical-line {
+  pointer-events: none;
+  position: absolute;
+  //border: dashed 1px red;
+  opacity: 0.8;
+}
