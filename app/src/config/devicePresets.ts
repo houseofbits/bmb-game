@@ -1,9 +1,9 @@
 export default [
   {
     name: "Test Morse code",
-    width: 1,
-    height: 2,
-    modules: ["timer", "morseCode"],
+    width: 3,
+    height: 1,
+    modules: ["timer", "wireMatcher", "wireMatcher"],
   },
   {
     name: "Test Labyrinth",
