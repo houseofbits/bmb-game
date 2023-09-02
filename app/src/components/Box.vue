@@ -28,6 +28,7 @@ function getModuleKey(index: number): number {
       :index="index"
       :status="module.state"
       :difficulty="deviceState.difficultyLevel.value"
+      :serial-number="deviceState.serialNumber.value"
       @disarm="() => deviceState.disarmModule(index)"
       @fail="() => deviceState.failModule(index)"
     />

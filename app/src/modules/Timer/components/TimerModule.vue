@@ -6,6 +6,7 @@ import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
 import defineDeviceState from "@src/composables/defineDeviceState";
 import Timer from "@src/modules/Timer/components/Timer.vue";
 import { getModuleMaxSolvingTime } from "@src/config/moduleDefinition";
+import { generateSerialNumber } from "@src/config/serialNumberGenerator";
 
 const deviceState = defineDeviceState();
 
@@ -30,13 +31,13 @@ const isDisarmed = ref(false);
 const isFailed = ref(false);
 const selectedMode = ref<string>("");
 const timerCounter = ref<number>(0);
-const serialNumber = ref<string | null>(null);
+// const serialNumber = ref<string | null>(null);
 let selectedDifficulty: DifficultyLevel | null = null;
 let timerId: number;
 
 function arm(): void {
   if (selectedDifficulty && isArmed.value == false) {
-    serialNumber.value = generateSerialNumber(selectedDifficulty);
+    deviceState.serialNumber.value = generateSerialNumber(selectedDifficulty);
     isArmed.value = true;
     isDisarmed.value = false;
     setTimer(calculateSolvingTime());
@@ -103,7 +104,7 @@ function restart(): void {
   timerCounter.value = 0;
   // selectedMode.value = "";
   // selectedDifficulty = null;
-  serialNumber.value = null;
+  deviceState.serialNumber.value = "";
   deviceState.markFinishedModulesReady();
 }
 
@@ -114,21 +115,6 @@ function kaboom(): void {
   console.log("kaboom");
   isFailed.value = true;
   deviceState.markActiveModulesFailed();
-}
-
-function generateSerialNumber(difficultyLevel: DifficultyLevel): string {
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
-
-  let letters = "";
-  for (let i = 0; i < 3; i++) {
-    letters += alphabet[Math.floor(Math.random() * alphabet.length)];
-  }
-
-  const min = 1000;
-  const max = 9999;
-  const numbers = Math.floor(Math.random() * (max - min + 1)) + min;
-
-  return letters.toUpperCase() + "-" + numbers;
 }
 </script>
 <template>
@@ -147,7 +133,7 @@ function generateSerialNumber(difficultyLevel: DifficultyLevel): string {
       </div>
 
       <div class="serial-number">
-        <div>{{ serialNumber }}</div>
+        <div>{{ deviceState.serialNumber.value }}</div>
       </div>
 
       <Timer :seconds="timerCounter / 10" />

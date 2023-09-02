@@ -47,7 +47,7 @@ export const moduleDefinition = [
     imageUrl: "https://picsum.photos/200/300",
     component: LabyrinthModule,
     maxCompletionTime: {
-      [DifficultyLevel.ANY]: 90,
+      [DifficultyLevel.ANY]: 200,
     },
   },
   {

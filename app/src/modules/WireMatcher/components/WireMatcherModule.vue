@@ -8,7 +8,7 @@ import defineModuleState, {
   ModuleProps,
 } from "@src/composables/defineModuleState";
 import PortPin from "@src/modules/WireMatcher/structures/PortPin";
-import { logContainerMousePosition } from "@src/helpers/debugging";
+import _ from "lodash";
 
 const emit = defineEmits(ModuleEmits);
 const props = defineProps(ModuleProps);
@@ -211,13 +211,18 @@ function getColor(port: number, index: number): string {
 }
 
 function generateColors(): void {
-  for (let i = 0; i < portColors[0].length; i++) {
+  const numberOfPins = 5;
+
+  for (let i = 0; i < numberOfPins; i++) {
     portColors[0][i] = Math.floor(Math.random() * 4);
   }
 
-  for (let i = 0; i < portColors[1].length; i++) {
+  for (let i = 0; i < numberOfPins; i++) {
     portColors[1][i] = Math.floor(Math.random() * 4);
   }
+
+  portColors[0] = _.shuffle(portColors[0]);
+  portColors[1] = _.shuffle(portColors[1]);
 }
 
 function clearColors(): void {
@@ -248,11 +253,7 @@ onMounted(() => {
 </script>
 <template>
   <div class="module card-module">
-    <div
-      class="content"
-      ref="contentElement"
-      @mousemove="logContainerMousePosition"
-    >
+    <div class="content" ref="contentElement">
       <div class="row-of-inputs row-1">
         <WireJack
           v-for="(n, index) in 5"

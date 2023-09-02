@@ -1,23 +1,42 @@
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
-import gameLevelsEasy from "@src/modules/Labyrinth/helpers/gameLevelsEasy";
 import LabyrinthGame from "@src/modules/Labyrinth/structures/LabyrinthGame";
 import _ from "lodash";
+import { LabyrinthWallVariations } from "@src/modules/Labyrinth/structures/LabyrinthEnums";
 
-const gameLevels = {
-  [DifficultyLevel.EASY]: gameLevelsEasy,
-  [DifficultyLevel.AVERAGE]: [],
-  [DifficultyLevel.HARD]: [],
-  [DifficultyLevel.IMPOSSIBLE]: [],
-};
+const _eas = DifficultyLevel.EASY;
+const _avg = DifficultyLevel.AVERAGE;
+const _har = DifficultyLevel.HARD;
+const _imp = DifficultyLevel.IMPOSSIBLE;
+
+const _A = LabyrinthWallVariations.A;
+const _B = LabyrinthWallVariations.B;
+const _C = LabyrinthWallVariations.C;
+
+//prettify-ignore
+export const allGameLevels: Array<LabyrinthGame> = [
+  LabyrinthGame.create(_eas, _A, 0, 2).addLevel(3, 5).addLevel(5, 3),
+  LabyrinthGame.create(_eas, _A, 1, 6).addLevel(3, 2).addLevel(5, 4),
+  LabyrinthGame.create(_eas, _A, 0, 1).addLevel(3, 6).addLevel(4, 4),
+  LabyrinthGame.create(_eas, _A, 3, 7).addLevel(4, 3).addLevel(6, 6),
+
+  LabyrinthGame.create(_eas, _A, 4, 7).addLevel(7, 5).addLevel(5, 0),
+
+  LabyrinthGame.create(_eas, _A, 3, 1).addLevel(5, 3).addLevel(7, 6),
+
+  LabyrinthGame.create(_eas, _B, 0, 2).addLevel(3, 5),
+
+  LabyrinthGame.create(_eas, _C, 0, 2).addLevel(3, 5),
+];
 
 export function getRandomGameLevel(
   difficulty: DifficultyLevel,
+  variant: number,
 ): LabyrinthGame | null {
-  if (gameLevels[difficulty].length > 0) {
-    const index = _.random(0, gameLevels[difficulty].length - 1);
-
-    return gameLevels[difficulty][index];
-  }
-
-  return null;
+  const levelsSubset = allGameLevels.filter(
+    (level: LabyrinthGame) =>
+      level.variation === variant && level.difficulty === difficulty,
+  );
+  const index = _.random(0, levelsSubset.length - 1);
+  return levelsSubset[index];
+  // return allGameLevels[4];
 }

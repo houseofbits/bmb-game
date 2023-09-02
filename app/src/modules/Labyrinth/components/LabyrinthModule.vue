@@ -3,7 +3,10 @@ import "@style/modules/labyrinth.scss";
 import ModuleStatusIndicator from "@src/components/ModuleStatusIndicator.vue";
 import { ref } from "vue";
 import LabyrinthPoint from "@src/modules/Labyrinth/structures/LabyrinthPoint";
-import { LabyrinthDirection } from "@src/modules/Labyrinth/structures/LabyrinthDirection";
+import {
+  LabyrinthDirection,
+  LabyrinthWallVariations,
+} from "@src/modules/Labyrinth/structures/LabyrinthEnums";
 import defineModuleState, {
   ModuleEmits,
   ModuleProps,
@@ -11,8 +14,7 @@ import defineModuleState, {
 import Frame from "@src/components/Frame.vue";
 import { getRandomGameLevel } from "@src/modules/Labyrinth/helpers/gameLevels";
 import LabyrinthGame from "@src/modules/Labyrinth/structures/LabyrinthGame";
-import LabyrinthWalls from "@src/modules/Labyrinth/structures/LabyrinthWalls";
-import getWallConfiguration from "@src/modules/Labyrinth/helpers/wallsDefinition";
+// import getWallConfiguration from "@src/modules/Labyrinth/helpers/wallsDefinition";
 import defineDebugState from "@src/composables/defineDebugState";
 
 const emit = defineEmits(ModuleEmits);
@@ -36,12 +38,25 @@ let blinkTimerId: number;
 let obstacleBlinkTimerId: number;
 let gameLevel: LabyrinthGame | null = null;
 let currentGameLevel: number = 0;
-let wallsDefinition: LabyrinthWalls | null = null;
 const strikeNumber = ref<number>(0);
 
+function getLevelVariation(): LabyrinthWallVariations {
+  if (props.serialNumber) {
+    const firstLetter = props.serialNumber[0];
+    switch (firstLetter) {
+      case "B":
+        return LabyrinthWallVariations.A;
+      case "M":
+        return LabyrinthWallVariations.B;
+      case "H":
+        return LabyrinthWallVariations.C;
+    }
+  }
+  return LabyrinthWallVariations.A;
+}
+
 function armModule(): void {
-  wallsDefinition = getWallConfiguration(props.difficulty);
-  gameLevel = getRandomGameLevel(props.difficulty);
+  gameLevel = getRandomGameLevel(props.difficulty, getLevelVariation());
   if (gameLevel) {
     strikeNumber.value = 0;
     currentGameLevel = 0;
@@ -67,7 +82,7 @@ function move(direction: LabyrinthDirection): void {
   if (!state.isArmed.value || state.isFailed.value) {
     return;
   }
-  if (!wallsDefinition?.canCross(direction, currentPoint.value)) {
+  if (!gameLevel?.walls?.canCross(direction, currentPoint.value)) {
     failModule();
     return;
   }
@@ -173,8 +188,8 @@ function startBlinking(): void {
 function getPointClass(state: boolean, index: number): Array<string> {
   const classes = [];
 
-  if (debugState.isDebugModeEnabled.value && wallsDefinition) {
-    classes.push("w-" + wallsDefinition.matrix[index]);
+  if (debugState.isDebugModeEnabled.value && gameLevel?.walls) {
+    classes.push("w-" + gameLevel?.walls.matrix[index]);
   }
 
   if (state) {

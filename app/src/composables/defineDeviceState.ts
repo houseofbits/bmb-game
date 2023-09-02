@@ -8,6 +8,7 @@ let modules = ref<Array<ModuleStructure>>([]);
 const modulesWidth = ref<number>(0);
 const modulesHeight = ref<number>(0);
 const difficultyLevel = ref<DifficultyLevel>(DifficultyLevel.EASY);
+const serialNumber = ref<string>("");
 
 const areAllModulesDisarmed = computed(() => {
   for (const module of modules.value) {
@@ -104,6 +105,7 @@ export default () => {
     areAllModulesDisarmed,
     markFinishedModulesReady,
     difficultyLevel,
+    serialNumber,
     haveSomeModulesFailed,
     markActiveModulesFailed,
     modules,
