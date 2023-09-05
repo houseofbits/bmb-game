@@ -38,45 +38,5 @@
     position: absolute;
     top: 100px;
     left: 70px;
-
-    & .numeric-key {
-      width: 60px;
-      height: 60px;
-      position: absolute;
-    }
-
-    & .enter-key {
-      width: 60px;
-      height: 124px;
-      position: absolute;
-    }
-
-    & .key-row-1 {
-      top: 0;
-    }
-
-    & .key-row-2 {
-      top: 64px;
-    }
-
-    & .key-row-3 {
-      top: 128px;
-    }
-
-    & .key-col-1 {
-      left: 0;
-    }
-
-    & .key-col-2 {
-      left: 64px;
-    }
-
-    & .key-col-3 {
-      left: 128px;
-    }
-
-    & .key-col-4 {
-      left: 192px;
-    }
   }
 }

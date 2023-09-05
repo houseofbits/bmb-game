@@ -7,6 +7,7 @@ import MorseCodeModule from "@src/modules/MorseCode/components/MorseCodeModule.v
 import PlaceholderModule from "@src/components/PlaceholderModule.vue";
 import { markRaw } from "vue";
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
+import BinaryLogicModule from "@src/modules/BinaryLogic/components/BinaryLogicModule.vue";
 
 export const moduleDefinition = [
   {
@@ -67,6 +68,16 @@ export const moduleDefinition = [
     description: "",
     imageUrl: "https://picsum.photos/200/300",
     component: MorseCodeModule,
+    maxCompletionTime: {
+      [DifficultyLevel.ANY]: 90,
+    },
+  },
+  {
+    name: "binaryLogic",
+    title: "Binary Logic module",
+    description: "",
+    imageUrl: "https://picsum.photos/200/300",
+    component: BinaryLogicModule,
     maxCompletionTime: {
       [DifficultyLevel.ANY]: 90,
     },

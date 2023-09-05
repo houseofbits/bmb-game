@@ -180,59 +180,95 @@ function getCharacter(index: number): string {
 
       <div class="keypad">
         <Keycap
-          class="numeric-key key-row-1 key-col-1"
+          top="0"
+          left="0"
+          width="60px"
+          height="60px"
           @click="addNumberToInput(1)"
           >1
         </Keycap>
         <Keycap
-          class="numeric-key key-row-1 key-col-2"
+          top="0"
+          left="64px"
+          width="60px"
+          height="60px"
           @click="addNumberToInput(2)"
           >2
         </Keycap>
         <Keycap
-          class="numeric-key key-row-1 key-col-3"
+          top="0"
+          left="128px"
+          width="60px"
+          height="60px"
           @click="addNumberToInput(3)"
           >3
         </Keycap>
 
         <Keycap
-          class="numeric-key key-row-2 key-col-1"
+          top="64px"
+          left="0"
+          width="60px"
+          height="60px"
           @click="addNumberToInput(4)"
           >4
         </Keycap>
         <Keycap
-          class="numeric-key key-row-2 key-col-2"
+          top="64px"
+          left="64px"
+          width="60px"
+          height="60px"
           @click="addNumberToInput(5)"
           >5
         </Keycap>
         <Keycap
-          class="numeric-key key-row-2 key-col-3"
+          top="64px"
+          left="128px"
+          width="60px"
+          height="60px"
           @click="addNumberToInput(6)"
           >6
         </Keycap>
 
         <Keycap
-          class="numeric-key key-row-3 key-col-1"
+          top="128px"
+          left="0"
+          width="60px"
+          height="60px"
           @click="addNumberToInput(7)"
           >7
         </Keycap>
         <Keycap
-          class="numeric-key key-row-3 key-col-2"
+          top="128px"
+          left="64px"
+          width="60px"
+          height="60px"
           @click="addNumberToInput(8)"
           >8
         </Keycap>
         <Keycap
-          class="numeric-key key-row-3 key-col-3"
+          top="128px"
+          left="128px"
+          width="60px"
+          height="60px"
           @click="addNumberToInput(9)"
           >9
         </Keycap>
         <Keycap
-          class="numeric-key key-row-3 key-col-4"
+          top="128px"
+          left="192px"
+          width="60px"
+          height="60px"
           @click="addNumberToInput(0)"
           >0
         </Keycap>
 
-        <Keycap class="enter-key key-row-1 key-col-4" @click="submitInput"
+        <Keycap
+          top="0"
+          left="192px"
+          width="60px"
+          height="124px"
+          class="enter-key key-row-1 key-col-4"
+          @click="submitInput"
           >E
         </Keycap>
       </div>

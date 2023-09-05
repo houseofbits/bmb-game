@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import defineDeviceState from "@src/composables/defineDeviceState";
 import { ref, watch } from "vue";
+import ModuleStructure from "@src/structures/ModuleStructure";
 
 const deviceState = defineDeviceState();
 

@@ -73,6 +73,27 @@ $module-height: 300px;
   }
 }
 
+@media only screen and (max-width: 859px) {
+  .device-width-2 > .timer-module {
+    order: -20;
+  }
+}
+
+@media only screen and (max-width: 1282px) {
+  .device-width-3 > .timer-module {
+    order: -20;
+  }
+}
+
+@media only screen and (max-width: 1706px) {
+  .device-width-4 {
+    max-width: ($module-width * 2)+80 !important;
+  }
+  .device-width-4 > .timer-module {
+    order: -20;
+  }
+}
+
 .module-status-indicator {
   height: 100%;
   background: #656565;
@@ -127,6 +148,7 @@ $module-height: 300px;
 .key {
   width: 60px;
   height: 60px;
+  position: absolute;
 
   & .cap {
     position: absolute;

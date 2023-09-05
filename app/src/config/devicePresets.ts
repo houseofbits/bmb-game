@@ -3,7 +3,7 @@ export default [
     name: "Current module in development",
     width: 1,
     height: 2,
-    modules: ["timer", "labyrinth"],
+    modules: ["timer", "binaryLogic"],
   },
   {
     name: "Test Morse code",
@@ -34,6 +34,12 @@ export default [
     width: 1,
     height: 2,
     modules: ["timer", "wireMatcher"],
+  },
+  {
+    name: "Test Binary Logic",
+    width: 1,
+    height: 2,
+    modules: ["timer", "binaryLogic"],
   },
   {
     name: "All modules",
