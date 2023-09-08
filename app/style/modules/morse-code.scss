@@ -8,7 +8,7 @@
 
 .rotary-switch {
   position: absolute;
-  top: 13px;
+  top: 10px;
   right: 13px;
   width: 80px;
   height: 80px;
@@ -19,7 +19,9 @@
   align-items: center;
   background: linear-gradient(147.2deg, #A1ABCE 13.91%, #9AA5CC 88.39%);
   border-bottom: solid 2px #235660;
+  border-top: solid 2px #93edff;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.4);
+  box-sizing: content-box;
 
   &.receive > .rotary-switch-body > .rotary-switch-top {
     transform: rotate(-45deg);
@@ -31,6 +33,21 @@
 
   &.practice > .rotary-switch-body > .rotary-switch-top {
     transform: rotate(45deg);
+  }
+
+  &.four-way {
+    &.position-0 > .rotary-switch-body > .rotary-switch-top {
+      transform: rotate(45deg);
+    }
+    &.position-1 > .rotary-switch-body > .rotary-switch-top {
+      transform: rotate(135deg);
+    }
+    &.position-2 > .rotary-switch-body > .rotary-switch-top {
+      transform: rotate(225deg);
+    }
+    &.position-3 > .rotary-switch-body > .rotary-switch-top {
+      transform: rotate(315deg);
+    }
   }
 
   & .rotary-switch-body {
@@ -52,7 +69,6 @@
       right: 10px;
       bottom: 10px;
       background: linear-gradient(180deg, #A4B6D9 0%, #ADC0E5 100%);
-      box-shadow: inset 0px -1px 1px rgba(0, 0, 0, 0.25);
       border-radius: 50%;
       display: flex;
       justify-content: center;
