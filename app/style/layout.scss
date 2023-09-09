@@ -17,8 +17,8 @@ $module-height: 300px;
   justify-content: center;
   align-items: center;
   overflow: auto;
-  padding:0;
-  margin:0;
+  padding: 0;
+  margin: 0;
 }
 
 .device {
@@ -54,7 +54,7 @@ $module-height: 300px;
     height: $module-height;
     min-width: $module-width;
     min-height: $module-height;
-    margin: 2px;
+    margin: 4px;
     border-radius: 12px;
     overflow: hidden;
     display: flex;
@@ -76,6 +76,14 @@ $module-height: 300px;
 @media only screen and (max-width: 859px) {
   .device-width-2 > .timer-module {
     order: -20;
+  }
+
+  .device {
+    padding: 0;
+  }
+
+  .device > .module {
+    margin: 6px 0;
   }
 }
 
