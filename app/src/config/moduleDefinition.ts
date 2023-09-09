@@ -24,7 +24,7 @@ export const moduleDefinition = [
     name: "simonSays",
     title: "Simon Says",
     description: "Observe the pattern and select the correct color",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: "/images/simonSays.png",
     component: SimonSaysModule,
     maxCompletionTime: {
       [DifficultyLevel.EASY]: 40,
@@ -35,7 +35,7 @@ export const moduleDefinition = [
     name: "wireMatcher",
     title: "Match the wires",
     description: "Match the correct connection from Port-A to Port-B",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: "/images/wireMatcher.png",
     component: WireMatcherModule,
     maxCompletionTime: {
       [DifficultyLevel.ANY]: 90,
@@ -45,7 +45,7 @@ export const moduleDefinition = [
     name: "labyrinth",
     title: "Labyrinth",
     description: "Negotiate the correct path to the endpoint",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: "/images/labyrinth.png",
     component: LabyrinthModule,
     maxCompletionTime: {
       [DifficultyLevel.ANY]: 200,
@@ -55,7 +55,7 @@ export const moduleDefinition = [
     name: "numberDecoder",
     title: "Decode the pin code",
     description: "Guess the correct pincode",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: "/images/numberDecoder.png",
     component: NumberDecoderModule,
     maxCompletionTime: {
       [DifficultyLevel.EASY]: 30,
@@ -66,7 +66,7 @@ export const moduleDefinition = [
     name: "morseCode",
     title: "Morse code module",
     description: "",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: "/images/morseCode.png",
     component: MorseCodeModule,
     maxCompletionTime: {
       [DifficultyLevel.ANY]: 90,
@@ -76,7 +76,7 @@ export const moduleDefinition = [
     name: "binaryLogic",
     title: "Binary Logic module",
     description: "",
-    imageUrl: "https://picsum.photos/200/300",
+    imageUrl: "/images/binaryLogic.png",
     component: BinaryLogicModule,
     maxCompletionTime: {
       [DifficultyLevel.ANY]: 90,
@@ -94,7 +94,7 @@ export const moduleDefinition = [
   },
 ];
 
-function getModuleDefinition(name: string): any {
+export function getModuleDefinition(name: string): any {
   return moduleDefinition.find((def) => def.name === name);
 }
 

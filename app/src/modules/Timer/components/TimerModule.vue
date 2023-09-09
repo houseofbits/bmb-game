@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "@style/modules/timer.scss";
-import { ref, watch } from "vue";
+import { onUnmounted, ref, watch } from "vue";
 import gameModes from "@src/config/gameModes";
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
 import defineDeviceState from "@src/composables/defineDeviceState";
@@ -109,10 +109,14 @@ function restart(): void {
 }
 
 function kaboom(): void {
-  console.log("kaboom");
+  // console.log("kaboom");
   isFailed.value = true;
   deviceState.markActiveModulesFailed();
 }
+
+onUnmounted(() => {
+  clearTimeout(timerId);
+});
 </script>
 <template>
   <div class="module timer-module">

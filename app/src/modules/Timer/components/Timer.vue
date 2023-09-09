@@ -30,7 +30,7 @@ function getFormattedTime(): string {
     characters.value[2] = secStrArray[0];
     characters.value[3] = secStrArray[1];
 
-    console.log(characters.value);
+    // console.log(characters.value);
   }
 
   const leftoverSecondFractions = props.seconds - leftoverSeconds;

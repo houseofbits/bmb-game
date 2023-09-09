@@ -73,6 +73,8 @@ export default () => {
   }
 
   function failModule(index: number): void {
+    console.log("Module failed " + index + ", " + modules.value[index].name);
+
     if (modules.value[index].state === ModuleState.ARMED) {
       modules.value[index].state = ModuleState.FAILED;
     }

@@ -56,17 +56,14 @@ export default (props: any, emit: CallableFunction) => {
     () => props.status,
     (status: ModuleState) => {
       if (status == ModuleState.ARMED) {
-        console.log("arm module");
         if (armedCallbackFunc) {
           armedCallbackFunc();
         }
       } else if (status == ModuleState.READY) {
-        console.log("restart module");
         if (readyCallbackFunc) {
           readyCallbackFunc();
         }
       } else if (status == ModuleState.FAILED) {
-        console.log("freeze module");
         if (failedCallbackFunc) {
           failedCallbackFunc();
         }

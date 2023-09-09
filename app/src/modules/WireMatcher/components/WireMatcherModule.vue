@@ -218,11 +218,11 @@ function generateColors(): void {
   }
 
   for (let i = 0; i < numberOfPins; i++) {
-    portColors[1][i] = Math.floor(Math.random() * 4);
+    portColors[1][i] = portColors[0][i]; //Math.floor(Math.random() * 4);
   }
 
   portColors[0] = _.shuffle(portColors[0]);
-  portColors[1] = _.shuffle(portColors[1]);
+  portColors[1] = _.shuffle(_.shuffle(portColors[1]));
 }
 
 function clearColors(): void {

@@ -26,15 +26,15 @@ function selectModule(index: number): void {
           color="primary"
           @click="selectModule(i)"
         >
-          <template v-slot:prepend>
-            <v-img
-              class="mr-2"
-              :width="100"
-              :height="80"
-              cover
-              :src="item.imageUrl"
-            />
-          </template>
+          <!--          <template v-slot:prepend>-->
+          <!--            <v-img-->
+          <!--              class="mr-2"-->
+          <!--              :width="100"-->
+          <!--              :height="70"-->
+          <!--              cover-->
+          <!--              :src="item.imageUrl"-->
+          <!--            />-->
+          <!--          </template>-->
 
           <v-list-item-title v-text="item.title" />
           <v-list-item-subtitle v-text="item.description" />

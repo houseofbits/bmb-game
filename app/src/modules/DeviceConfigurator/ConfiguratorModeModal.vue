@@ -12,7 +12,7 @@ const presets: Array<string> = devicePresets.map((preset) => {
 });
 
 function apply(): void {
-  console.log(devicePresets);
+  // console.log(devicePresets);
   const index = devicePresets.findIndex((preset) => {
     return preset.name === selectedPreset.value;
   });

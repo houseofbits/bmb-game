@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
+import ScrewHead from "@src/components/ScrewHead.vue";
 
 const STRIKE_BLINK_INTERVALS: { [index: number]: number } = {
   1: 400,

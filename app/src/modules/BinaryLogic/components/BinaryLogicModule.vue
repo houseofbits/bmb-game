@@ -10,6 +10,8 @@ import defineDebugState from "@src/composables/defineDebugState";
 import Frame from "@src/components/Frame.vue";
 import Keycap from "@src/components/Keycap.vue";
 import RotarySwitch from "@src/components/RotarySwitch.vue";
+import _ from "lodash";
+import ScrewHead from "@src/components/ScrewHead.vue";
 
 const emit = defineEmits(ModuleEmits);
 const props = defineProps(ModuleProps);
@@ -37,27 +39,11 @@ const MATRIX_WIDTH = 4;
 
 //prettier-ignore
 const solution = [
-        1, 0, 1, 1,
-        1, 1, 1, 1,
-        1, 1, 1, 0,
-        1, 1, 1, 1,
+        1, 0, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 0, 0,
     ];
-
-//prettier-ignore
-const buffer = [
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-];
-
-//prettier-ignore
-const current = [
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-];
 
 //prettier-ignore
 const parameters = [
@@ -90,6 +76,7 @@ const parameters = [
 function armModule(): void {
   selectedParameter.value = 0;
   updateBufferMatrix(parameters[selectedParameter.value]);
+  initOutputMatrix();
 }
 
 function restartModule(): void {}
@@ -97,25 +84,31 @@ function restartModule(): void {}
 function freezeModule(): void {}
 
 function updateBufferMatrix(data: Array<number>): void {
-  for (let i = 0; i < bufferMatrix.value.length; i++) {
-    bufferMatrix.value[i] = data[i];
+  if (state.isArmed.value) {
+    for (let i = 0; i < bufferMatrix.value.length; i++) {
+      bufferMatrix.value[i] = data[i];
+    }
   }
 }
 
 function prevParameter(): void {
-  if (selectedParameter.value == 0) {
-    selectedParameter.value = parameters.length - 1;
-  } else {
-    selectedParameter.value = selectedParameter.value - 1;
-  }
+  if (state.isArmed.value) {
+    if (selectedParameter.value == 0) {
+      selectedParameter.value = parameters.length - 1;
+    } else {
+      selectedParameter.value = selectedParameter.value - 1;
+    }
 
-  updateBufferMatrix(parameters[selectedParameter.value]);
+    updateBufferMatrix(parameters[selectedParameter.value]);
+  }
 }
 
 function nextParameter(): void {
-  selectedParameter.value = (selectedParameter.value + 1) % parameters.length;
+  if (state.isArmed.value) {
+    selectedParameter.value = (selectedParameter.value + 1) % parameters.length;
 
-  updateBufferMatrix(parameters[selectedParameter.value]);
+    updateBufferMatrix(parameters[selectedParameter.value]);
+  }
 }
 
 function selectOperator(op: string): void {
@@ -136,33 +129,37 @@ function selectOperator(op: string): void {
 }
 
 function rotateBuffer(): void {
-  const data = new Array(MATRIX_WIDTH * MATRIX_WIDTH).fill(0);
+  if (state.isArmed.value) {
+    const data = new Array(MATRIX_WIDTH * MATRIX_WIDTH).fill(0);
 
-  for (let y = 0; y < MATRIX_WIDTH; y++) {
-    for (let x = 0; x < MATRIX_WIDTH; x++) {
-      const index = y * MATRIX_WIDTH + x;
-      const index2 = x * MATRIX_WIDTH + (MATRIX_WIDTH - y - 1);
+    for (let y = 0; y < MATRIX_WIDTH; y++) {
+      for (let x = 0; x < MATRIX_WIDTH; x++) {
+        const index = y * MATRIX_WIDTH + x;
+        const index2 = x * MATRIX_WIDTH + (MATRIX_WIDTH - y - 1);
 
-      data[index] = bufferMatrix.value[index2];
+        data[index] = bufferMatrix.value[index2];
+      }
     }
-  }
 
-  updateBufferMatrix(data);
+    updateBufferMatrix(data);
+  }
 }
 
 function mirrorBuffer(): void {
-  const data = new Array(MATRIX_WIDTH * MATRIX_WIDTH).fill(0);
+  if (state.isArmed.value) {
+    const data = new Array(MATRIX_WIDTH * MATRIX_WIDTH).fill(0);
 
-  for (let y = 0; y < MATRIX_WIDTH; y++) {
-    for (let x = 0; x < MATRIX_WIDTH; x++) {
-      const index = y * MATRIX_WIDTH + x;
-      const index2 = y * MATRIX_WIDTH + (MATRIX_WIDTH - 1 - x);
+    for (let y = 0; y < MATRIX_WIDTH; y++) {
+      for (let x = 0; x < MATRIX_WIDTH; x++) {
+        const index = y * MATRIX_WIDTH + x;
+        const index2 = y * MATRIX_WIDTH + (MATRIX_WIDTH - 1 - x);
 
-      data[index] = bufferMatrix.value[index2];
+        data[index] = bufferMatrix.value[index2];
+      }
     }
-  }
 
-  updateBufferMatrix(data);
+    updateBufferMatrix(data);
+  }
 }
 
 function operator(a: number, b: number): number {
@@ -188,12 +185,33 @@ function operator(a: number, b: number): number {
 }
 
 function applyBuffer(): void {
-  for (let i = 0; i < bufferMatrix.value.length; i++) {
-    outputMatrix.value[i] = operator(
-      outputMatrix.value[i],
-      bufferMatrix.value[i],
-    );
+  if (state.isArmed.value) {
+    for (let i = 0; i < bufferMatrix.value.length; i++) {
+      outputMatrix.value[i] = operator(
+        outputMatrix.value[i],
+        bufferMatrix.value[i],
+      );
+    }
+
+    checkForSolution();
   }
+}
+
+function initOutputMatrix(): void {
+  for (let i = 0; i < outputMatrix.value.length; i++) {
+    outputMatrix.value[i] = _.random(0, 1);
+  }
+}
+
+function checkForSolution(): void {
+  for (let i = 0; i < outputMatrix.value.length; i++) {
+    if (outputMatrix.value[i] != solution[i]) {
+      //TODO alternatively, add strike
+      return;
+    }
+  }
+
+  state.emitDisarmed();
 }
 </script>
 <template>
