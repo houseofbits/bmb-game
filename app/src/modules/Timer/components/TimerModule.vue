@@ -108,9 +108,6 @@ function restart(): void {
   deviceState.markFinishedModulesReady();
 }
 
-/**
- * Event emitted when a mistake has been made on one of the modules. Based on the game mode END THE GAME or GIVE A STRIKE
- */
 function kaboom(): void {
   console.log("kaboom");
   isFailed.value = true;
