@@ -3,7 +3,7 @@ export default [
     name: "Current module in development",
     width: 1,
     height: 2,
-    modules: ["timer", "wireMatcher"],
+    modules: ["timer", "binaryLogic"],
   },
   {
     name: "Test Morse code",

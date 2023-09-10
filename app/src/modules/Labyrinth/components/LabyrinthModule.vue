@@ -3,10 +3,7 @@ import "@style/modules/labyrinth.scss";
 import ModuleStatusIndicator from "@src/components/ModuleStatusIndicator.vue";
 import { ref } from "vue";
 import LabyrinthPoint from "@src/modules/Labyrinth/structures/LabyrinthPoint";
-import {
-  LabyrinthDirection,
-  LabyrinthWallVariations,
-} from "@src/modules/Labyrinth/structures/LabyrinthEnums";
+import { LabyrinthDirection } from "@src/modules/Labyrinth/structures/LabyrinthEnums";
 import defineModuleState, {
   ModuleEmits,
   ModuleProps,
@@ -40,23 +37,8 @@ let gameLevel: LabyrinthGame | null = null;
 let currentGameLevel: number = 0;
 const strikeNumber = ref<number>(0);
 
-function getLevelVariation(): LabyrinthWallVariations {
-  if (props.serialNumber) {
-    const firstLetter = props.serialNumber[0];
-    switch (firstLetter) {
-      case "B":
-        return LabyrinthWallVariations.A;
-      case "M":
-        return LabyrinthWallVariations.B;
-      case "H":
-        return LabyrinthWallVariations.C;
-    }
-  }
-  return LabyrinthWallVariations.A;
-}
-
 function armModule(): void {
-  gameLevel = getRandomGameLevel(props.difficulty, getLevelVariation());
+  gameLevel = getRandomGameLevel(props.difficulty, props.serialNumber);
   if (gameLevel) {
     strikeNumber.value = 0;
     currentGameLevel = 0;

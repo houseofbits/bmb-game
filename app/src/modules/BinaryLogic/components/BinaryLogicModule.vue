@@ -12,6 +12,8 @@ import Keycap from "@src/components/Keycap.vue";
 import RotarySwitch from "@src/components/RotarySwitch.vue";
 import _ from "lodash";
 import ScrewHead from "@src/components/ScrewHead.vue";
+import BinaryLogicPattern from "@src/modules/BinaryLogic/structures/BinaryLogicPattern";
+import { getLevel } from "@src/modules/BinaryLogic/helpers/levels";
 
 const emit = defineEmits(ModuleEmits);
 const props = defineProps(ModuleProps);
@@ -32,50 +34,53 @@ enum OperationOption {
 
 const selectedParameter = ref<number>(0);
 const selectedOperation = ref<number>(0);
-const bufferMatrix = ref<Array<number>>(new Array(4 * 4).fill(0));
-const outputMatrix = ref<Array<number>>(new Array(4 * 4).fill(0));
+const bufferMatrix = ref<Array<boolean>>(new Array(4 * 4).fill(false));
+const outputMatrix = ref<Array<boolean>>(new Array(4 * 4).fill(false));
 
 const MATRIX_WIDTH = 4;
 
-//prettier-ignore
-const solution = [
-        1, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-    ];
+let level: BinaryLogicPattern = new BinaryLogicPattern([], []);
 
-//prettier-ignore
-const parameters = [
-    [
-        0, 1, 0, 1,
-        1, 0, 1, 0,
-        0, 1, 0, 1,
-        1, 0, 1, 0,
-    ],
-    [
-        0, 0, 0, 0,
-        1, 1, 1, 1,
-        0, 0, 0, 0,
-        1, 1, 1, 1,
-    ],
-    [
-        1, 1, 1, 1,
-        1, 1, 1, 1,
-        0, 0, 0, 0,
-        0, 0, 0, 0,
-    ],
-    [
-        1, 1, 0, 0,
-        1, 1, 0, 0,
-        0, 0, 1, 1,
-        0, 0, 1, 1,
-    ],
-];
+// //prettier-ignore
+// const solution = [
+//         1, 0, 0, 0,
+//         0, 0, 0, 0,
+//         0, 0, 0, 0,
+//         0, 0, 0, 0,
+//     ];
+//
+// //prettier-ignore
+// const parameters = [
+//     [
+//         0, 1, 0, 1,
+//         1, 0, 1, 0,
+//         0, 1, 0, 1,
+//         1, 0, 1, 0,
+//     ],
+//     [
+//         0, 0, 0, 0,
+//         1, 1, 1, 1,
+//         0, 0, 0, 0,
+//         1, 1, 1, 1,
+//     ],
+//     [
+//         1, 1, 1, 1,
+//         1, 1, 1, 1,
+//         0, 0, 0, 0,
+//         0, 0, 0, 0,
+//     ],
+//     [
+//         1, 1, 0, 0,
+//         1, 1, 0, 0,
+//         0, 0, 1, 1,
+//         0, 0, 1, 1,
+//     ],
+// ];
 
 function armModule(): void {
+  level = getLevel(props.difficulty, props.serialNumber);
   selectedParameter.value = 0;
-  updateBufferMatrix(parameters[selectedParameter.value]);
+  updateBufferMatrix(level.parameters[selectedParameter.value]);
   initOutputMatrix();
 }
 
@@ -83,7 +88,7 @@ function restartModule(): void {}
 
 function freezeModule(): void {}
 
-function updateBufferMatrix(data: Array<number>): void {
+function updateBufferMatrix(data: Array<boolean>): void {
   if (state.isArmed.value) {
     for (let i = 0; i < bufferMatrix.value.length; i++) {
       bufferMatrix.value[i] = data[i];
@@ -94,20 +99,21 @@ function updateBufferMatrix(data: Array<number>): void {
 function prevParameter(): void {
   if (state.isArmed.value) {
     if (selectedParameter.value == 0) {
-      selectedParameter.value = parameters.length - 1;
+      selectedParameter.value = level.parameters.length - 1;
     } else {
       selectedParameter.value = selectedParameter.value - 1;
     }
 
-    updateBufferMatrix(parameters[selectedParameter.value]);
+    updateBufferMatrix(level.parameters[selectedParameter.value]);
   }
 }
 
 function nextParameter(): void {
   if (state.isArmed.value) {
-    selectedParameter.value = (selectedParameter.value + 1) % parameters.length;
+    selectedParameter.value =
+      (selectedParameter.value + 1) % level.parameters.length;
 
-    updateBufferMatrix(parameters[selectedParameter.value]);
+    updateBufferMatrix(level.parameters[selectedParameter.value]);
   }
 }
 
@@ -162,7 +168,7 @@ function mirrorBuffer(): void {
   }
 }
 
-function operator(a: number, b: number): number {
+function operator(a: boolean, b: boolean): boolean {
   const A = Boolean(a);
   const B = Boolean(b);
   let result: boolean = false;
@@ -181,7 +187,7 @@ function operator(a: number, b: number): number {
       break;
   }
 
-  return Number(result);
+  return Boolean(result);
 }
 
 function applyBuffer(): void {
@@ -204,14 +210,9 @@ function initOutputMatrix(): void {
 }
 
 function checkForSolution(): void {
-  for (let i = 0; i < outputMatrix.value.length; i++) {
-    if (outputMatrix.value[i] != solution[i]) {
-      //TODO alternatively, add strike
-      return;
-    }
+  if (level.isEqual(outputMatrix.value)) {
+    state.emitDisarmed();
   }
-
-  state.emitDisarmed();
 }
 </script>
 <template>
@@ -251,7 +252,7 @@ function checkForSolution(): void {
         radius="8px"
       >
         <div class="display">
-          <div v-for="val in bufferMatrix" :class="['active-' + val]" />
+          <div v-for="val in bufferMatrix" :class="['active-' + Number(val)]" />
         </div>
       </Frame>
 
@@ -264,7 +265,7 @@ function checkForSolution(): void {
         radius="8px"
       >
         <div class="display">
-          <div v-for="val in outputMatrix" :class="['active-' + val]" />
+          <div v-for="val in outputMatrix" :class="['active-' + Number(val)]" />
         </div>
       </Frame>
 

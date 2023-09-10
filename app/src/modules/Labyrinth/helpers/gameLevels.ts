@@ -1,16 +1,19 @@
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
 import LabyrinthGame from "@src/modules/Labyrinth/structures/LabyrinthGame";
 import _ from "lodash";
-import { LabyrinthWallVariations } from "@src/modules/Labyrinth/structures/LabyrinthEnums";
+import {
+  decodeSerialNumber,
+  SerialNumberVariationId,
+} from "@src/helpers/serialNumber";
 
 const _eas = DifficultyLevel.EASY;
 const _avg = DifficultyLevel.AVERAGE;
 const _har = DifficultyLevel.HARD;
 const _imp = DifficultyLevel.IMPOSSIBLE;
 
-const _A = LabyrinthWallVariations.A;
-const _B = LabyrinthWallVariations.B;
-const _C = LabyrinthWallVariations.C;
+const _A = SerialNumberVariationId.ID_A;
+const _B = SerialNumberVariationId.ID_B;
+const _C = SerialNumberVariationId.ID_C;
 
 //prettify-ignore
 export const allGameLevels: Array<LabyrinthGame> = [
@@ -30,8 +33,10 @@ export const allGameLevels: Array<LabyrinthGame> = [
 
 export function getRandomGameLevel(
   difficulty: DifficultyLevel,
-  variant: number,
+  serialNumber: string,
 ): LabyrinthGame | null {
+  const variant = decodeSerialNumber(serialNumber).getFirstLetterVariation();
+
   const levelsSubset = allGameLevels.filter(
     (level: LabyrinthGame) =>
       level.variation === variant && level.difficulty === difficulty,

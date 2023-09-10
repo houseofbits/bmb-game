@@ -1,8 +1,8 @@
 import LabyrinthPoint from "@src/modules/Labyrinth/structures/LabyrinthPoint";
 import LabyrinthWalls from "@src/modules/Labyrinth/structures/LabyrinthWalls";
-import { LabyrinthWallVariations } from "@src/modules/Labyrinth/structures/LabyrinthEnums";
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
 import getWalls from "@src/modules/Labyrinth/helpers/wallsDefinition";
+import { SerialNumberVariationId } from "@src/helpers/serialNumber";
 
 export class LabyrinthLevel {
   endingPoint: LabyrinthPoint;
@@ -30,14 +30,14 @@ export class LabyrinthLevel {
 
 export default class LabyrinthGame {
   difficulty: DifficultyLevel;
-  variation: LabyrinthWallVariations;
+  variation: SerialNumberVariationId;
   startingPoint: LabyrinthPoint;
   levels: Array<LabyrinthLevel> = [];
   walls: LabyrinthWalls;
 
   constructor(
     difficulty: DifficultyLevel,
-    variation: LabyrinthWallVariations,
+    variation: SerialNumberVariationId,
     startX: number,
     startY: number,
   ) {
@@ -72,7 +72,7 @@ export default class LabyrinthGame {
 
   static create(
     difficulty: DifficultyLevel,
-    variation: LabyrinthWallVariations,
+    variation: SerialNumberVariationId,
     x: number,
     y: number,
   ): LabyrinthGame {

@@ -4,9 +4,3 @@ export enum LabyrinthDirection {
   LEFT,
   RIGHT,
 }
-
-export enum LabyrinthWallVariations {
-  A,
-  B,
-  C,
-}

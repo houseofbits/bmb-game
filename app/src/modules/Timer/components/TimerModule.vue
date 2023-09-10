@@ -6,7 +6,7 @@ import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
 import defineDeviceState from "@src/composables/defineDeviceState";
 import Timer from "@src/modules/Timer/components/Timer.vue";
 import { getModuleMaxSolvingTime } from "@src/config/moduleDefinition";
-import { generateSerialNumber } from "@src/config/serialNumberGenerator";
+import { generateSerialNumber } from "@src/helpers/serialNumber";
 
 const deviceState = defineDeviceState();
 

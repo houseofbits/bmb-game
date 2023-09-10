@@ -17,7 +17,7 @@ export const ModuleProps = {
   },
   serialNumber: {
     type: String,
-    required: true,
+    default: () => "",
   },
 };
 

@@ -1,17 +1,17 @@
 import LabyrinthWalls from "@src/modules/Labyrinth/structures/LabyrinthWalls";
-import { LabyrinthWallVariations } from "@src/modules/Labyrinth/structures/LabyrinthEnums";
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
+import { SerialNumberVariationId } from "@src/helpers/serialNumber";
 
 export default function getWalls(
   difficultyLevel: DifficultyLevel,
-  variant: LabyrinthWallVariations,
+  variant: SerialNumberVariationId,
 ): LabyrinthWalls {
   return easyWalls[variant];
 }
 
 //prettier-ignore
 const easyWalls = {
-    [LabyrinthWallVariations.A]: new LabyrinthWalls([
+    [SerialNumberVariationId.ID_A]: new LabyrinthWalls([
         0, 1, 0, 1, 0, 1, 0, 0,
         0, 0, 0, 1, 0, 1, 0, 0,
         0, 0, 0, 1, 0, 1, 0, 0,
@@ -21,7 +21,7 @@ const easyWalls = {
         0, 1, 0, 1, 0, 0, 0, 0,
         0, 1, 0, 1, 0, 1, 0, 0,
     ]),
-    [LabyrinthWallVariations.B]: new LabyrinthWalls([
+    [SerialNumberVariationId.ID_B]: new LabyrinthWalls([
         0, 1, 0, 0, 0, 1, 0, 0,
         0, 1, 0, 0, 0, 0, 0, 0,
         0, 1, 0, 0, 2, 2, 0, 0,
@@ -31,7 +31,7 @@ const easyWalls = {
         0, 0, 0, 0, 0, 1, 0, 0,
         0, 1, 0, 0, 0, 1, 0, 0,
     ]),
-    [LabyrinthWallVariations.C]: new LabyrinthWalls([
+    [SerialNumberVariationId.ID_C]: new LabyrinthWalls([
         0, 1, 0, 0, 0, 1, 0, 0,
         0, 1, 0, 0, 0, 0, 0, 0,
         0, 1, 0, 0, 2, 2, 0, 0,
