@@ -8,6 +8,7 @@ import PlaceholderModule from "@src/components/PlaceholderModule.vue";
 import { markRaw } from "vue";
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
 import BinaryLogicModule from "@src/modules/BinaryLogic/components/BinaryLogicModule.vue";
+import BinaryLogicModuleV2 from "@src/modules/BinaryLogic/components/BinaryLogicModuleV2.vue";
 
 export const moduleDefinition = [
   {
@@ -78,6 +79,16 @@ export const moduleDefinition = [
     description: "",
     imageUrl: "/images/binaryLogic.png",
     component: BinaryLogicModule,
+    maxCompletionTime: {
+      [DifficultyLevel.ANY]: 90,
+    },
+  },
+  {
+    name: "binaryLogic2",
+    title: "Binary Logic module v2",
+    description: "",
+    imageUrl: "/images/binaryLogic.png",
+    component: BinaryLogicModuleV2,
     maxCompletionTime: {
       [DifficultyLevel.ANY]: 90,
     },
