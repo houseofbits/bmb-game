@@ -52,7 +52,7 @@ export default [
       "simonSays",
       "wireMatcher",
       "morseCode",
-      "binaryLogic",
+      "binaryLogic2",
       "labyrinth",
       "numberDecoder",
     ],
