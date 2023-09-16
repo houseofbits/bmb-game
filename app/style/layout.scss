@@ -189,17 +189,18 @@ $module-height: 300px;
     border-bottom-width: 4px;
     border-right-width: 2px;
     border-left-width: 2px;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2), 2px 2px 4px rgba(0, 0, 0, 0.1), -2px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4), 2px 2px 4px rgba(0, 0, 0, 0.1), -2px 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 50ms;
     cursor: pointer;
     transform: translateY(-4px);
 
     &:active {
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.7), 1px 2px 1px rgba(0, 0, 0, 0.4), -1px 2px 1px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 1px 2px 1px rgba(0, 0, 0, 0.6), -1px 2px 1px rgba(0, 0, 0, 0.6);
       background: -webkit-linear-gradient(top, #e5e5e5 0%, #d9d9d9 80%, #c7c7c7 100%);
       border-bottom-width: 3px;
       transform: translateY(0px);
-      color: #939393;
+      border-color: white;
+      color: #6e6e6e;
     }
   }
 
