@@ -104,18 +104,16 @@ function setMode(selectedMode: OperationMode): void {
 }
 
 function toggleMode(): void {
-  if (state.isArmed.value) {
-    switch (mode.value) {
-      case OperationMode.RECEIVE:
-        setMode(OperationMode.TRANSMIT);
-        break;
-      case OperationMode.TRANSMIT:
-        setMode(OperationMode.PRACTICE);
-        break;
-      case OperationMode.PRACTICE:
-        setMode(OperationMode.RECEIVE);
-        break;
-    }
+  switch (mode.value) {
+    case OperationMode.RECEIVE:
+      setMode(OperationMode.TRANSMIT);
+      break;
+    case OperationMode.TRANSMIT:
+      setMode(OperationMode.PRACTICE);
+      break;
+    case OperationMode.PRACTICE:
+      setMode(OperationMode.RECEIVE);
+      break;
   }
 }
 
