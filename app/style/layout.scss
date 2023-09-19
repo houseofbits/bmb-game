@@ -278,11 +278,19 @@ $module-height: 300px;
     right: 0;
     display: flex;
     justify-content: center;
+    overflow: visible;
 
     & .label {
+      overflow: visible;
+      position: relative;
       background-color: #c2c2c2;
+      //background-color: red;
       padding-left: 4px;
       padding-right: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      //clip-path: ellipse(50% 70%);
     }
   }
 }

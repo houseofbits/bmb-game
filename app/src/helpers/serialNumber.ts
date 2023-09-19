@@ -26,6 +26,8 @@ export class SerialNumber {
     SerialNumberVariationId.ID_A,
   ];
 
+  isFirstDigitOdd: boolean = false;
+
   getFirstLetterVariation(): SerialNumberVariationId {
     return this.variations[0];
   }
@@ -58,6 +60,10 @@ export function decodeSerialNumber(serialNumber: string): SerialNumber {
   serialNumberStructure.variations[1] = getVariation(
     SECOND_LETTER_CHARACTERS,
     charactersArray[1],
+  );
+
+  serialNumberStructure.isFirstDigitOdd = !Number.isInteger(
+    parseInt(charactersArray[3]) / 2,
   );
 
   return serialNumberStructure;

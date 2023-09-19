@@ -51,7 +51,9 @@ const frameStyle = computed(() => {
   >
     <slot />
     <div v-if="props.text" class="label-wrapper">
-      <div class="label">{{ text }}</div>
+      <div class="label">
+        {{ text }}
+      </div>
     </div>
   </div>
 </template>

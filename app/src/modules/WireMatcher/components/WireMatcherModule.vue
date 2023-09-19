@@ -9,6 +9,11 @@ import defineModuleState, {
 } from "@src/composables/defineModuleState";
 import PortPin from "@src/modules/WireMatcher/structures/PortPin";
 import _ from "lodash";
+import {
+  ConnectionState,
+  validateConnection,
+} from "@src/modules/WireMatcher/helpers/level";
+import { decodeSerialNumber } from "@src/helpers/serialNumber";
 
 const emit = defineEmits(ModuleEmits);
 const props = defineProps(ModuleProps);
@@ -26,8 +31,9 @@ const elementOffset = 18;
 let mousePosition: Array<number> = [0, 0];
 let segmentsToDraw: Array<Array<number>> = [];
 let connectedPortPins: Array<Array<PortPin>> = [];
+let isFirstDigitOfSerialNumberOdd = false;
 
-const colorClasses = ["red", "green", "blue", "yellow"];
+const colorClasses = ["red", "yellow", "green", "blue"];
 const portColors: Array<Array<number | null>> = [
   [null, null, null, null, null],
   [null, null, null, null, null],
@@ -38,6 +44,9 @@ function armModule(): void {
   connectedPortPins = [];
   generateColors();
   renderWires();
+
+  const serialNumberStructure = decodeSerialNumber(props.serialNumber);
+  isFirstDigitOfSerialNumberOdd = serialNumberStructure.isFirstDigitOdd;
 }
 
 function restartModule(): void {
@@ -85,7 +94,38 @@ function selectInput(event: PointerEvent, port: number, pin: number) {
 
     renderWires();
 
-    validateConnections();
+    let isConnectionValid = ConnectionState.INCORRECT;
+    let pinA = null;
+    let pinB = null;
+    if (selectedPortPin.portIndex == 0 && portPin.portIndex === 1) {
+      pinA = selectedPortPin.pinIndex;
+      pinB = portPin.pinIndex;
+    } else if (selectedPortPin.portIndex == 1 && portPin.portIndex === 0) {
+      pinA = portPin.pinIndex;
+      pinB = selectedPortPin.pinIndex;
+    } else {
+      isConnectionValid = ConnectionState.INCORRECT;
+    }
+
+    if (pinA !== null && pinB !== null) {
+      isConnectionValid = validateConnection(
+        pinA,
+        pinB,
+        portColors[0],
+        portColors[1],
+        isFirstDigitOfSerialNumberOdd,
+      );
+      portColors[0][pinA] = null;
+      portColors[1][pinB] = null;
+    }
+
+    if (isConnectionValid == ConnectionState.CORRECT) {
+      //Continue disarming
+    } else if (isConnectionValid == ConnectionState.COMPLETED) {
+      state.emitDisarmed();
+    } else {
+      state.emitFailed();
+    }
   }
 }
 
@@ -100,43 +140,6 @@ function isPinOccupied(portPin: PortPin): boolean {
   }
 
   return false;
-}
-
-/**
- * Basic rules to match colors from port A to port B
- */
-function validateConnections(): void {
-  const portColorsCopy = [[...portColors[0]], [...portColors[1]]];
-
-  //Validate existing connections
-  for (const connection of connectedPortPins) {
-    const color0 =
-      portColorsCopy[connection[0].portIndex][connection[0].pinIndex];
-    const color1 =
-      portColorsCopy[connection[1].portIndex][connection[1].pinIndex];
-
-    if (color0 !== color1) {
-      state.emitFailed();
-    }
-
-    portColorsCopy[connection[0].portIndex][connection[0].pinIndex] = null;
-    portColorsCopy[connection[1].portIndex][connection[1].pinIndex] = null;
-  }
-
-  //Check if it is possible to make any more connections from port A to port B
-  for (const color0 of portColorsCopy[0]) {
-    if (color0 !== null && portColorsCopy[1].find((val) => color0 === val)) {
-      return;
-    }
-  }
-
-  for (const color1 of portColorsCopy[1]) {
-    if (color1 !== null && portColorsCopy[0].find((val) => color1 === val)) {
-      return;
-    }
-  }
-
-  state.emitDisarmed();
 }
 
 function drawWire(ctx: CanvasRenderingContext2D, points: Array<number>): void {
@@ -218,7 +221,8 @@ function generateColors(): void {
   }
 
   for (let i = 0; i < numberOfPins; i++) {
-    portColors[1][i] = portColors[0][i]; //Math.floor(Math.random() * 4);
+    portColors[1][i] = Math.floor(Math.random() * 4);
+    // portColors[1][i] = portColors[0][i];
   }
 
   portColors[0] = _.shuffle(portColors[0]);
