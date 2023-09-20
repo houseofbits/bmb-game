@@ -193,34 +193,34 @@ function generatePatterns(numElements: number): string {
       </div>
 
       <Frame
-        left="60px"
-        top="20px"
-        height="125px"
-        width="125px"
+        :left="60"
+        :top="17"
+        :height="125"
+        :width="125"
         radius="8px"
         text="GREEN"
       />
       <Frame
-        left="195px"
-        top="20px"
-        height="125px"
-        width="125px"
+        :left="195"
+        :top="17"
+        :height="125"
+        :width="125"
         radius="8px"
         text="RED"
       />
       <Frame
-        left="60px"
-        top="155px"
-        height="125px"
-        width="125px"
+        :left="60"
+        :top="155"
+        :height="125"
+        :width="125"
         radius="8px"
         text="YELLOW"
       />
       <Frame
-        left="195px"
-        top="155px"
-        height="125px"
-        width="125px"
+        :left="195"
+        :top="155"
+        :height="125"
+        :width="125"
         radius="8px"
         text="BLUE"
       />
@@ -235,15 +235,6 @@ function generatePatterns(numElements: number): string {
           <div class="hilight"></div>
         </div>
       </div>
-
-      <!--      <div class="step-indicator">-->
-      <!--        <div-->
-      <!--          v-for="(a, i) in 6"-->
-      <!--          :class="{ active: isPatternActive(i), failed: isPatternFailed(i) }"-->
-      <!--        />-->
-      <!--      </div>-->
-
-      <!--      <div class="label steps-label">REMAINING PATTERNS</div>-->
     </div>
     <ModuleStatusIndicator
       :is-armed="state.isArmed.value"

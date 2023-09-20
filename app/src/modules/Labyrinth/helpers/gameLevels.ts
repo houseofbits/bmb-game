@@ -41,6 +41,9 @@ export function getRandomGameLevel(
     (level: LabyrinthGame) =>
       level.variation === variant && level.difficulty === difficulty,
   );
+
+  console.log(levelsSubset.length);
+
   const index = _.random(0, levelsSubset.length - 1);
   return levelsSubset[index];
   // return allGameLevels[4];

@@ -69,6 +69,7 @@ $module-height: 300px;
       flex-grow: 1;
       height: 100%;
       background: #c2c2c2;
+      background: linear-gradient(325deg, rgba(177,177,177,1) 0%, rgba(205,205,200,1) 100%);
     }
   }
 }
@@ -105,6 +106,7 @@ $module-height: 300px;
 .module-status-indicator {
   height: 100%;
   background: #7f8288;
+  background: linear-gradient(325deg, rgba(127,130,136,1) 0%, rgba(158,158,158,1) 100%);
   width: 35px;
   position: relative;
 
@@ -127,8 +129,8 @@ $module-height: 300px;
       top: 100px;
 
       &.active {
-        background: red;
-        box-shadow: 0 0 12px 2px rgba(255, 140, 0, 0.9);
+        background: #ff0000;
+        box-shadow: 0 0 12px 2px rgba(255, 140, 0, 0.9), 0 0 6px 2px rgba(255, 255, 0, 0.3), inset 0 0 4px 2px rgba(255, 255, 0, 0.4);
       }
     }
 
@@ -266,9 +268,17 @@ $module-height: 300px;
 
 .framed-label {
   position: absolute;
+  //border: dotted 1px blue;
 
-  &.with-border {
+  & .with-border {
+    pointer-events: none;
+    position:absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     border: solid 2px rgba(255, 255, 255, 0.8);
+    //background-color: rgba(255,0,0,0.5);
   }
 
   & .label-wrapper {
@@ -283,7 +293,7 @@ $module-height: 300px;
     & .label {
       overflow: visible;
       position: relative;
-      background-color: #c2c2c2;
+      //background-color: #c2c2c2;
       //background-color: red;
       padding-left: 4px;
       padding-right: 4px;

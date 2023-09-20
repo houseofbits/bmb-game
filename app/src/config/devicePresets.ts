@@ -36,10 +36,16 @@ export default [
     modules: ["timer", "wireMatcher"],
   },
   {
-    name: "Test Binary Logic",
+    name: "Test Binary Logic ADVANCED",
     width: 1,
     height: 2,
     modules: ["timer", "binaryLogic"],
+  },
+  {
+    name: "Test Binary Logic",
+    width: 1,
+    height: 2,
+    modules: ["timer", "binaryLogic2"],
   },
   {
     name: "All modules",

@@ -355,10 +355,10 @@ onUnmounted(() => {
 
       <Frame
         radius="50%"
-        left="30px"
-        top="160px"
-        height="110px"
-        width="110px"
+        :left="30"
+        :top="160"
+        :height="110"
+        :width="110"
         text="MODE"
       >
         <div class="rotary-switch" @click="toggleMode" :class="[modeClass]">
@@ -384,10 +384,10 @@ onUnmounted(() => {
 
       <Frame
         radius="50%"
-        left="240px"
-        top="160px"
-        height="110px"
-        width="110px"
+        :left="240"
+        :top="160"
+        :height="110"
+        :width="110"
         text="TRANSMIT"
       >
         <div
@@ -412,10 +412,10 @@ onUnmounted(() => {
       </Frame>
 
       <Frame
-        top="230px"
-        left="170px"
-        width="45px"
-        height="60px"
+        :top="230"
+        :left="170"
+        :width="45"
+        :height="60"
         :has-border="false"
       >
         <div

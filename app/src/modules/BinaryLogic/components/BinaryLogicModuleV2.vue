@@ -208,10 +208,10 @@ function checkForSolution(): void {
 
       <Frame
         text="BUFFER"
-        top="20px"
-        left="20px"
-        width="125px"
-        height="125px"
+        :top="20"
+        :left="20"
+        :width="125"
+        :height="125"
         radius="8px"
       >
         <div class="display">
@@ -221,10 +221,10 @@ function checkForSolution(): void {
 
       <Frame
         text="OUTPUT"
-        top="20px"
-        left="240px"
-        width="125px"
-        height="125px"
+        :top="20"
+        :left="240"
+        :width="125"
+        :height="125"
         radius="8px"
       >
         <div class="display">

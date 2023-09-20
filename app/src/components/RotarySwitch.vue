@@ -33,7 +33,7 @@ const modeClass = computed(() => {
 function computeLine(angleRadians: number): Array<Array<number>> {
   const x = Math.cos(angleRadians);
   const y = Math.sin(angleRadians);
-  const center = 53;
+  const center = 55;
   const len = 55 + 10;
   return [
     [center + x * 55, center + y * 55],
@@ -54,10 +54,10 @@ function toggleMode(): void {
 <template>
   <Frame
     radius="50%"
-    :left="props.left + 'px'"
-    :top="props.top + 'px'"
-    height="110px"
-    width="110px"
+    :left="props.left"
+    :top="props.top"
+    :height="110"
+    :width="110"
     :text="props.text"
   >
     <div

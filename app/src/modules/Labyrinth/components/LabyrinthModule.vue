@@ -185,10 +185,10 @@ function getPointClass(state: boolean, index: number): Array<string> {
   <div class="module card-module labyrinth-module">
     <div class="content">
       <Frame
-        top="35px"
-        left="75px"
-        height="230px"
-        width="230px"
+        :top="35"
+        :left="75"
+        :height="230"
+        :width="230"
         text="MATRIX"
         radius="8px"
       />
