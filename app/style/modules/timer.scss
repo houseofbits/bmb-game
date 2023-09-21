@@ -1,18 +1,37 @@
 @keyframes blinkingBackground {
   0% {
-    background-color: #c2c2c2;
+    background-color: rgba(120,0,0,0.1);
   }
   25% {
-    background-color: #e00c0c;
+    background-color: rgba(120,0,0,0.7);
   }
   50% {
-    background-color: #c2c2c2;
+    background-color: rgba(120,0,0,0.1);
   }
   75% {
-    background-color: #e00c0c;
+    background-color: rgba(120,0,0,0.7);
   }
   100% {
-    background-color: #c2c2c2;
+    background-color: rgba(120,0,0,0.1);
+  }
+}
+
+.failed-overlay {
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left:0;
+  right:0;
+  animation: blinkingBackground 2s infinite;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & .center-wrapper {
+    position: relative;
+    width: 140px;
+    height:100px;
   }
 }
 
@@ -55,7 +74,7 @@
 
 .seven-segment-timer {
   position: absolute;
-  top: 145px;
+  top: 135px;
   left: 80px;
   width: 250px;
   min-width: 250px;

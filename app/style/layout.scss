@@ -118,6 +118,7 @@ $module-height: 300px;
     left: 12px;
     transition: all 200ms;
     box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
 
     & div {
       transform: rotate(-90deg);

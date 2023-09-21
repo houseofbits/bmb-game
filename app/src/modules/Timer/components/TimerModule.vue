@@ -7,6 +7,7 @@ import defineDeviceState from "@src/composables/defineDeviceState";
 import Timer from "@src/modules/Timer/components/Timer.vue";
 import { getModuleMaxSolvingTime } from "@src/config/moduleDefinition";
 import { generateSerialNumber } from "@src/helpers/serialNumber";
+import Keycap from "@src/components/Keycap.vue";
 
 const deviceState = defineDeviceState();
 
@@ -65,6 +66,14 @@ function disarm(): void {
   }
 }
 
+function toggleAction(): void {
+  if (isArmed.value) {
+    disarm();
+  } else {
+    arm();
+  }
+}
+
 function timestep() {
   if (!isArmed.value || isFailed.value) {
     return;
@@ -120,7 +129,21 @@ onUnmounted(() => {
 </script>
 <template>
   <div class="module timer-module">
-    <div class="content" :class="{ failed: isFailed }">
+    <div class="failed-overlay" v-if="isFailed">
+      <div class="center-wrapper">
+        <Keycap
+          width="140px"
+          height="100px"
+          top="0px"
+          left="0px"
+          font-size="15px"
+          @click="restart"
+          >RESTART
+        </Keycap>
+      </div>
+    </div>
+
+    <div class="content">
       <div class="w-100">
         <VSelect
           v-model="selectedMode"
@@ -139,15 +162,20 @@ onUnmounted(() => {
 
       <Timer :seconds="timerCounter / 10" />
 
-      <div v-if="!isFailed && !isDisarmed">
-        <VBtn class="ma-3" color="red-darken-4" @click="arm">Arm</VBtn>
-        <VBtn class="ma-3" color="light-green-darken-4" @click="disarm"
-          >Disarm
-        </VBtn>
+      <div>
+        <Keycap
+          width="140px"
+          height="50px"
+          top="230px"
+          left="135px"
+          font-size="15px"
+          @click="toggleAction"
+          >ARM / DISARM
+        </Keycap>
       </div>
-      <div v-else>
-        <VBtn class="ma-3" color="red-darken-4" @click="restart">RESTART</VBtn>
-      </div>
+      <!--      <div v-else>-->
+      <!--        <VBtn class="ma-3" color="red-darken-4" @click="restart">RESTART</VBtn>-->
+      <!--      </div>-->
     </div>
   </div>
 </template>
