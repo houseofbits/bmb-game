@@ -56,14 +56,15 @@
     & .serial-number {
       position: absolute;
       width: 100%;
-      height: auto;
-      top: 70px;
+      height: 50px;
+      top: 0;
       display: flex;
       justify-content: center;
+      align-items: center;
 
       & div {
         font-weight: bolder;
-        font-size: 40px;
+        font-size: 38px;
         text-shadow: -1px -1px 1px #fff, 1px 1px 1px #000;
         color: #9c8468;
         opacity: 0.4;
@@ -74,7 +75,7 @@
 
 .seven-segment-timer {
   position: absolute;
-  top: 135px;
+  top: 140px;
   left: 80px;
   width: 250px;
   min-width: 250px;
@@ -90,5 +91,29 @@
   & .divider {
     width: 20px;
     height: 80px;
+  }
+
+  & .diode {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #757575;
+    transition: all 300ms;
+
+    &.active {
+      background-color: yellow;
+      box-shadow: inset 0 -2px 4px rgba(0,0,0,0.1);
+      filter: drop-shadow(0 0 4px rgba(255, 255, 0, 1));
+    }
+
+    &.p1 {
+      left: 117px;
+      top:20px;
+    }
+    &.p2 {
+      left: 117px;
+      top:60px;
+    }
   }
 }

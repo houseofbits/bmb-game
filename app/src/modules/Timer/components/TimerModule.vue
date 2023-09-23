@@ -9,15 +9,12 @@ import { getModuleMaxSolvingTime } from "@src/config/moduleDefinition";
 import { generateSerialNumber } from "@src/helpers/serialNumber";
 import Keycap from "@src/components/Keycap.vue";
 import { getFormattedTime } from "@src/helpers/timer";
+import Frame from "@src/components/Frame.vue";
+import { ModuleEmits, ModuleProps } from "@src/composables/defineModuleState";
 
+const emit = defineEmits(ModuleEmits);
+const props = defineProps(ModuleProps);
 const deviceState = defineDeviceState();
-
-const props = defineProps({
-  index: {
-    type: Number,
-    required: true,
-  },
-});
 
 watch(
   () => deviceState.haveSomeModulesFailed.value,
@@ -141,18 +138,27 @@ onUnmounted(() => {
         />
       </div>
 
-      <div class="serial-number">
-        <div>{{ deviceState.serialNumber.value }}</div>
-      </div>
+      <Frame
+        :width="200"
+        :height="50"
+        :top="73"
+        :left="105"
+        radius="8px"
+        text="SERIAL NUMBER"
+      >
+        <div class="serial-number">
+          <div>{{ deviceState.serialNumber.value }}</div>
+        </div>
+      </Frame>
 
       <Timer :seconds="timerCounter / 10" />
 
       <div>
         <Keycap
-          width="140px"
+          width="160px"
           height="50px"
-          top="235px"
-          left="135px"
+          top="238px"
+          left="125px"
           font-size="15px"
           @click="toggleAction"
           >ARM / DISARM
