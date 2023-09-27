@@ -27,7 +27,7 @@ watch(
         p2Active.value = !p2Active.value;
       } else {
         p1Active.value = !p1Active.value;
-        p2Active.value = !p2Active.value;
+        p2Active.value = p1Active.value;
       }
       prevValue = intVal;
     }

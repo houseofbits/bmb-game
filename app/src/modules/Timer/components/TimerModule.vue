@@ -30,8 +30,7 @@ const isDisarmed = ref(false);
 const isFailed = ref(false);
 const selectedMode = ref<string>("");
 const timerCounter = ref<number>(0);
-// const serialNumber = ref<string | null>(null);
-let selectedDifficulty: DifficultyLevel | null = null;
+let selectedDifficulty: DifficultyLevel | null = DifficultyLevel.EASY;
 let timerId: number;
 let timeWhenDisarmed = "";
 
@@ -126,30 +125,25 @@ onUnmounted(() => {
 <template>
   <div class="module timer-module">
     <div class="content">
-      <div class="w-100">
-        <VSelect
-          v-model="selectedMode"
-          class="ma-3"
-          label="Difficulty level"
-          variant="outlined"
-          density="compact"
-          :items="gameModes"
-          :disabled="isArmed || isDisarmed"
-        />
-      </div>
+      <div class="card-slot">
+        <div class="slot-opening-border"></div>
+        <div class="slot-opening"></div>
 
-      <Frame
-        :width="200"
-        :height="50"
-        :top="73"
-        :left="105"
-        radius="8px"
-        text="SERIAL NUMBER"
-      >
-        <div class="serial-number">
-          <div>{{ deviceState.serialNumber.value }}</div>
+        <div class="card-3d-container">
+          <div class="card-3d">
+            <div class="bottom-shadow"></div>
+            <div class="overlay-shadow"></div>
+            <div class="inner-border"></div>
+            <div class="difficulty-label">DIFFICULTY LEVEL</div>
+            <div class="difficulty-text">PIECE OF CAKE</div>
+
+            <div class="serial-number-label">SERIAL NUMBER</div>
+            <div class="serial-number-text">
+              {{ deviceState.serialNumber.value || "??-????" }}
+            </div>
+          </div>
         </div>
-      </Frame>
+      </div>
 
       <Timer :seconds="timerCounter / 10" />
 
