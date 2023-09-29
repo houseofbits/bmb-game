@@ -29,6 +29,16 @@ const haveSomeModulesFailed = computed(() => {
   return false;
 });
 
+const isDeviceArmed = computed(() => {
+  for (const module of modules.value) {
+    if (module.state == ModuleState.ARMED) {
+      return true;
+    }
+  }
+
+  return false;
+});
+
 export default () => {
   function clearModuleStatuses(): void {
     modules.value.splice(0, modules.value.length);
@@ -113,5 +123,6 @@ export default () => {
     modules,
     modulesWidth,
     modulesHeight,
+    isDeviceArmed,
   };
 };

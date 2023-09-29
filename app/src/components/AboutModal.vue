@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import defineDebugState from "@src/composables/defineDebugState";
+import gameModes from "@src/config/gameModes";
+import defineDeviceState from "@src/composables/defineDeviceState";
+import { de } from "vuetify/locale";
 
+const deviceState = defineDeviceState();
 const debugState = defineDebugState();
 const packageVersion = require("/package.json").version;
 
 const emit = defineEmits(["close", "select"]);
 const isModalVisible = ref(true);
+const selectedMode = ref<string>("");
 
 watch(
   () => isModalVisible.value,
@@ -18,9 +23,25 @@ watch(
   },
 );
 
+watch(selectedMode, (val: string) => {
+  const item = gameModes.find((element) => element.title === val);
+  if (item) {
+    deviceState.difficultyLevel.value = item.difficulty;
+  }
+});
+
 function close(): void {
   emit("close");
 }
+
+onMounted(() => {
+  const item = gameModes.find(
+    (element) => element.difficulty === deviceState.difficultyLevel.value,
+  );
+  if (item) {
+    selectedMode.value = item.title;
+  }
+});
 </script>
 <template>
   <v-dialog v-model="isModalVisible" width="auto">
@@ -45,6 +66,17 @@ function close(): void {
       >
       <v-card-text align="center">BMB v{{ packageVersion }}</v-card-text>
 
+      <v-card-text align="center">
+        <VSelect
+          v-model="selectedMode"
+          class="ma-3"
+          label="Difficulty level"
+          variant="outlined"
+          density="compact"
+          :items="gameModes"
+          :disabled="deviceState.isDeviceArmed.value"
+        />
+      </v-card-text>
       <v-card-text align="center">
         <v-switch
           v-model="debugState.isDebugModeEnabled.value"

@@ -11,6 +11,8 @@ import Keycap from "@src/components/Keycap.vue";
 import { getFormattedTime } from "@src/helpers/timer";
 import Frame from "@src/components/Frame.vue";
 import { ModuleEmits, ModuleProps } from "@src/composables/defineModuleState";
+import DashedBorder from "@src/modules/Timer/components/DashedBorder.vue";
+import CardReader from "@src/modules/Timer/components/CardReader.vue";
 
 const emit = defineEmits(ModuleEmits);
 const props = defineProps(ModuleProps);
@@ -28,19 +30,19 @@ watch(
 const isArmed = ref(false);
 const isDisarmed = ref(false);
 const isFailed = ref(false);
-const selectedMode = ref<string>("");
 const timerCounter = ref<number>(0);
-let selectedDifficulty: DifficultyLevel | null = DifficultyLevel.EASY;
 let timerId: number;
 let timeWhenDisarmed = "";
 
 function arm(): void {
-  if (selectedDifficulty && isArmed.value == false) {
-    deviceState.serialNumber.value = generateSerialNumber(selectedDifficulty);
+  if (isArmed.value == false) {
+    deviceState.serialNumber.value = generateSerialNumber(
+      deviceState.difficultyLevel.value,
+    );
     isArmed.value = true;
     isDisarmed.value = false;
     setTimer(calculateSolvingTime());
-    deviceState.armReadyModules(selectedDifficulty);
+    deviceState.armReadyModules(deviceState.difficultyLevel.value);
   }
 }
 
@@ -93,27 +95,17 @@ function setTimer(seconds: number): void {
   timerId = <number>(<unknown>setTimeout(timestep, 1000));
 }
 
-watch(selectedMode, (val: string) => {
-  const item = gameModes.find((element) => element.title === val);
-  if (item) {
-    selectedDifficulty = item.difficulty;
-  }
-});
-
 function restart(): void {
   clearTimeout(timerId);
   isArmed.value = false;
   isDisarmed.value = false;
   isFailed.value = false;
   timerCounter.value = 0;
-  // selectedMode.value = "";
-  // selectedDifficulty = null;
   deviceState.serialNumber.value = "";
   deviceState.markFinishedModulesReady();
 }
 
 function kaboom(): void {
-  // console.log("kaboom");
   isFailed.value = true;
   deviceState.markActiveModulesFailed();
 }
@@ -125,39 +117,30 @@ onUnmounted(() => {
 <template>
   <div class="module timer-module">
     <div class="content">
-      <div class="card-slot">
-        <div class="slot-opening-border"></div>
-        <div class="slot-opening"></div>
-
-        <div class="card-3d-container">
-          <div class="card-3d">
-            <div class="bottom-shadow"></div>
-            <div class="overlay-shadow"></div>
-            <div class="inner-border"></div>
-            <div class="difficulty-label">DIFFICULTY LEVEL</div>
-            <div class="difficulty-text">PIECE OF CAKE</div>
-
-            <div class="serial-number-label">SERIAL NUMBER</div>
-            <div class="serial-number-text">
-              {{ deviceState.serialNumber.value || "??-????" }}
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <DashedBorder />
+      <CardReader
+        :serial-number="deviceState.serialNumber.value"
+        :difficulty="props.difficulty"
+      />
+      <Frame
+        radius="10px"
+        :width="280"
+        :height="113"
+        :top="110"
+        :left="69"
+        text="TIME"
+      >
+      </Frame>
       <Timer :seconds="timerCounter / 10" />
-
-      <div>
-        <Keycap
-          width="160px"
-          height="50px"
-          top="238px"
-          left="125px"
-          font-size="15px"
-          @click="toggleAction"
-          >ARM / DISARM
-        </Keycap>
-      </div>
+      <Keycap
+        width="160px"
+        height="50px"
+        top="238px"
+        left="129px"
+        font-size="15px"
+        @click="toggleAction"
+        >ARM / DISARM
+      </Keycap>
     </div>
   </div>
 
@@ -198,8 +181,8 @@ onUnmounted(() => {
         </svg>
       </v-card-text>
       <v-card-text align="center"
-        >Your time: {{ timeWhenDisarmed }}</v-card-text
-      >
+        >Your time: {{ timeWhenDisarmed }}
+      </v-card-text>
       <v-card-text align="center">
         <v-btn @click="restart">Restart</v-btn>
       </v-card-text>
