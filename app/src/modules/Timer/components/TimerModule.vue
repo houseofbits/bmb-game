@@ -28,8 +28,6 @@ watch(
 );
 
 const timerModule = ref<Element | null>(null);
-const isStickyModuleVisible = ref(false);
-
 const isFailFromTimeout = ref(false);
 const isArmed = ref(false);
 const isDisarmed = ref(false);
@@ -120,7 +118,11 @@ onMounted(() => {
     let observer = new IntersectionObserver(
       (entries, observer) => {
         entries.forEach((entry) => {
-          isStickyModuleVisible.value = !entry.isIntersecting;
+          if (timerModule.value) {
+            entry.isIntersecting
+              ? timerModule.value.classList.remove("sticky-timer-module")
+              : timerModule.value.classList.add("sticky-timer-module");
+          }
         });
       },
       {
@@ -141,12 +143,35 @@ onUnmounted(() => {
 });
 </script>
 <template>
-  <div
-    class="module timer-module"
-    :class="{ 'sticky-timer-module': isStickyModuleVisible }"
-    ref="timerModule"
-  >
-    <div class="content sticky" :class="{ faded: !isStickyModuleVisible }">
+  <div class="module timer-module" ref="timerModule">
+    <div class="content regular">
+      <DashedBorder />
+      <CardReader
+        :serial-number="deviceState.serialNumber.value"
+        :difficulty="props.difficulty"
+      />
+      <Frame
+        radius="10px"
+        :width="280"
+        :height="113"
+        :top="110"
+        :left="69"
+        text="TIME"
+      >
+      </Frame>
+      <Timer :seconds="timerCounter / 10" :top="125" :left="84" />
+      <Keycap
+        width="160px"
+        height="50px"
+        top="238px"
+        left="129px"
+        font-size="15px"
+        @click="toggleAction"
+        >ARM / DISARM
+      </Keycap>
+    </div>
+
+    <div class="content sticky">
       <DashedBorder />
       <Timer
         :seconds="timerCounter / 10"
@@ -196,36 +221,7 @@ onUnmounted(() => {
         </template>
       </div>
     </div>
-
-    <div class="content" :class="{ faded: isStickyModuleVisible }">
-      <DashedBorder />
-      <CardReader
-        :serial-number="deviceState.serialNumber.value"
-        :difficulty="props.difficulty"
-      />
-      <Frame
-        radius="10px"
-        :width="280"
-        :height="113"
-        :top="110"
-        :left="69"
-        text="TIME"
-      >
-      </Frame>
-      <Timer :seconds="timerCounter / 10" :top="125" :left="84" />
-      <Keycap
-        width="160px"
-        height="50px"
-        top="238px"
-        left="129px"
-        font-size="15px"
-        @click="toggleAction"
-        >ARM / DISARM
-      </Keycap>
-    </div>
   </div>
-
-  <!--  <div class="sticky-timer-module"></div>-->
 
   <v-dialog v-model="isFailed" width="auto" persistent>
     <v-card>
