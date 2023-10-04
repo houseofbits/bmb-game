@@ -149,6 +149,9 @@ onUnmounted(() => {
         :segment-size="4"
         :gap="6"
       />
+      <div class="serial-number">
+        {{ deviceState.serialNumber.value || "??-????" }}
+      </div>
     </div>
 
     <div class="content" :class="{ faded: isStickyModuleVisible }">

@@ -45,10 +45,10 @@
 
   & .content {
     position: absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -72,8 +72,8 @@
 
   &.sticky {
     position: absolute;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
   }
 }
 
@@ -295,9 +295,20 @@
   }
 }
 
-.sticky-timer-module{
+.sticky-timer-module {
   position: sticky;
-  top:-240px;
+  top: -240px;
   z-index: 500;
-  box-shadow: 0 2px 3px rgb(0 0 0), 0 5px 20px rgba(0,0,0,0.5) !important;
+  box-shadow: 0 2px 3px rgb(0 0 0), 0 5px 20px rgba(0, 0, 0, 0.5) !important;
+
+  & .serial-number {
+    position: absolute;
+    height: auto;
+    bottom: 7px;
+    left: 10px;
+    color: rgba(0,0,0,0.5);
+    font-size: 28px;
+    line-height: 28px;
+    font-weight: bolder;
+  }
 }
