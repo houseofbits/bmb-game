@@ -39,6 +39,14 @@ const isDeviceArmed = computed(() => {
   return false;
 });
 
+export function getDifficultyLevel(): DifficultyLevel {
+  return difficultyLevel.value;
+}
+
+export function getSerialNumber(): string {
+  return serialNumber.value;
+}
+
 export default () => {
   function clearModuleStatuses(): void {
     modules.value.splice(0, modules.value.length);

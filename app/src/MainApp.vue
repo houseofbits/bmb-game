@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Box from "@src/components/Box.vue";
+import Device from "@src/components/Device.vue";
 import { onMounted, ref } from "vue";
 import Toolbar from "@src/components/Toolbar.vue";
 import "@style/documentation.scss";
@@ -25,7 +25,7 @@ onMounted(() => {
 </script>
 <template>
   <div class="box-center-wrapper">
-    <Box />
+    <Device />
   </div>
 
   <div v-if="isDocumentationVisible" class="box-center-wrapper pa-2">

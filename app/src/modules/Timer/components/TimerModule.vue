@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import "@style/modules/timer.scss";
-import { onUnmounted, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import gameModes from "@src/config/gameModes";
 import { DifficultyLevel } from "@src/helpers/difficultyLevelConstants";
 import defineDeviceState from "@src/composables/defineDeviceState";
@@ -26,6 +26,9 @@ watch(
     }
   },
 );
+
+const timerModule = ref<Element | null>(null);
+const isStickyModuleVisible = ref(false);
 
 const isArmed = ref(false);
 const isDisarmed = ref(false);
@@ -110,13 +113,45 @@ function kaboom(): void {
   deviceState.markActiveModulesFailed();
 }
 
+onMounted(() => {
+  if (timerModule.value) {
+    let observer = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          isStickyModuleVisible.value = !entry.isIntersecting;
+        });
+      },
+      {
+        threshold: 60 / 297,
+      },
+    );
+
+    observer.observe(timerModule.value);
+  }
+});
+
 onUnmounted(() => {
   clearTimeout(timerId);
 });
 </script>
 <template>
-  <div class="module timer-module">
-    <div class="content">
+  <div
+    class="module timer-module"
+    :class="{ 'sticky-timer-module': isStickyModuleVisible }"
+    ref="timerModule"
+  >
+    <div class="content sticky" :class="{ faded: !isStickyModuleVisible }">
+      <Timer
+        :seconds="timerCounter / 10"
+        :top="247"
+        :left="275"
+        :height="40"
+        :segment-size="4"
+        :gap="6"
+      />
+    </div>
+
+    <div class="content" :class="{ faded: isStickyModuleVisible }">
       <DashedBorder />
       <CardReader
         :serial-number="deviceState.serialNumber.value"
@@ -131,7 +166,7 @@ onUnmounted(() => {
         text="TIME"
       >
       </Frame>
-      <Timer :seconds="timerCounter / 10" />
+      <Timer :seconds="timerCounter / 10" :top="125" :left="84" />
       <Keycap
         width="160px"
         height="50px"
@@ -143,6 +178,8 @@ onUnmounted(() => {
       </Keycap>
     </div>
   </div>
+
+  <!--  <div class="sticky-timer-module"></div>-->
 
   <v-dialog v-model="isFailed" width="auto" persistent>
     <v-card>

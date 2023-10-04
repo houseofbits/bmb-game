@@ -2,8 +2,8 @@ export default [
   {
     name: "Current module in development",
     width: 1,
-    height: 2,
-    modules: ["timer", "wireMatcher"],
+    height: 4,
+    modules: ["timer", "wireMatcher", "morseCode", "simonSays"],
   },
   {
     name: "Test Morse code",

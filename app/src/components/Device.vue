@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import defineDeviceState from "@src/composables/defineDeviceState";
 import { ref, watch } from "vue";
-import ModuleStructure from "@src/structures/ModuleStructure";
+import BmbDevice from "@src/components/prototype/BmbDevice.vue";
 
 const deviceState = defineDeviceState();
 
@@ -18,6 +18,8 @@ function getModuleKey(index: number): number {
 }
 </script>
 <template>
+  <!--  <BmbDevice />-->
+
   <div
     class="device"
     :class="['device-width-' + deviceState.modulesWidth.value]"
