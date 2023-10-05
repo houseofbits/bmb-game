@@ -6,6 +6,18 @@ export default [
     modules: ["timer", "wireMatcher", "morseCode", "simonSays"],
   },
   {
+    name: "Beginner challenge 2x2",
+    width: 2,
+    height: 2,
+    modules: ["timer", "simonSays", "numberDecoder", "labyrinth"],
+  },
+  {
+    name: "Fidgety modules 2x2",
+    width: 2,
+    height: 2,
+    modules: ["timer", "binaryLogic", "morseCode", "wireMatcher"],
+  },
+  {
     name: "Test Morse code",
     width: 1,
     height: 2,
