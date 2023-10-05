@@ -313,19 +313,19 @@
   & .serial-number {
     position: absolute;
     height: auto;
-    bottom: 25px;
+    bottom: 28px;
     left: 28px;
     color: rgba(0,0,0,0.5);
-    font-size: 26px;
-    line-height: 26px;
-    font-weight: bolder;
+    font-size: 22px;
+    line-height: 22px;
+    font-weight: 900;
   }
 
   & .difficulty-level {
     position: absolute;
     height: auto;
     bottom: 25px;
-    right: 20px;
+    right: 15px;
     display: flex;
     gap: 4px;
     opacity: 0.5;

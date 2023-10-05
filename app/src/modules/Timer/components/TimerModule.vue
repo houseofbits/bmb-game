@@ -108,9 +108,11 @@ function restart(): void {
 }
 
 function kaboom(isTimeout: boolean): void {
-  isFailFromTimeout.value = isTimeout;
-  isFailed.value = true;
-  deviceState.markActiveModulesFailed();
+  if (!isFailed.value) {
+    isFailFromTimeout.value = isTimeout;
+    isFailed.value = true;
+    deviceState.markActiveModulesFailed();
+  }
 }
 
 onMounted(() => {
@@ -264,7 +266,7 @@ onUnmounted(() => {
         </svg>
       </v-card-text>
       <v-card-text align="center"
-        >Your time: {{ timeWhenDisarmed }}
+        >JUST IN TIME {{ timeWhenDisarmed }}
       </v-card-text>
       <v-card-text align="center">
         <v-btn @click="restart">Restart</v-btn>

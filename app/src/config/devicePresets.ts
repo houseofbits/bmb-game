@@ -2,8 +2,8 @@ export default [
   {
     name: "Current module in development",
     width: 1,
-    height: 4,
-    modules: ["timer", "wireMatcher", "morseCode", "simonSays"],
+    height: 2,
+    modules: ["timer", "wireMatcher"],
   },
   {
     name: "Beginner challenge 2x2",
