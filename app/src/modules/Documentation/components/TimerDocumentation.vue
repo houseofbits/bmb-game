@@ -6,7 +6,7 @@
       Main module of the game is designed to select game mode, initiate and
       complete the game and display state of the game.
     </p>
-    <v-img class="ma-4" height="200px" src="https://picsum.photos/500/200" />
+    <!--    <v-img class="ma-4" height="200px" src="https://picsum.photos/500/200" />-->
     <p class="mt-2">
       The module has three main components. First is the game mode selector. You
       select the game mode by inserting the card in the card slot.

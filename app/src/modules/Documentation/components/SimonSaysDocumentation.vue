@@ -1,6 +1,7 @@
 <script setup lang="ts"></script>
 <template>
   <v-card-title class="text-h4 mt-6">Simon Says module</v-card-title>
+  <v-img height="200px" src="/images/simon-says-doc-main.svg" />
   <v-card-text class="text-body-1 mt-3">
     <p>
       Be prepared to calculate some basic checksums. Colored buttons blink in

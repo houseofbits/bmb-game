@@ -5,6 +5,7 @@ import NumberDecoderDocumentation from "@src/modules/Documentation/components/Nu
 import BinaryLogicDocumentation from "@src/modules/Documentation/components/BinaryLogicDocumentation.vue";
 import SimonSaysDocumentation from "@src/modules/Documentation/components/SimonSaysDocumentation.vue";
 import TimerDocumentation from "@src/modules/Documentation/components/TimerDocumentation.vue";
+import LabyrinthDocumentation from "@src/modules/Documentation/components/LabyrinthDocumentation.vue";
 </script>
 <template>
   <v-card width="1000px" class="docs-container pb-15">
@@ -22,8 +23,7 @@ import TimerDocumentation from "@src/modules/Documentation/components/TimerDocum
 
     <TimerDocumentation />
 
-    <v-card-title class="text-h4 mt-6">Labyrinth module</v-card-title>
-    <v-card-text class="text-body-1 mt-3"></v-card-text>
+    <LabyrinthDocumentation />
 
     <SimonSaysDocumentation />
 
