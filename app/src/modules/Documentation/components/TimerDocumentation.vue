@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 <template>
   <v-card-title class="text-h4 mt-6">Main module - TIMER</v-card-title>
-  <v-img height="200px" src="/images/timer-doc-main.svg" />
+  <v-img height="200px" src="/images/timer-doc-header.svg" />
   <v-card-text class="text-body-1 mt-3">
     <p>
       Main module of the game is designed to select game mode, initiate and
