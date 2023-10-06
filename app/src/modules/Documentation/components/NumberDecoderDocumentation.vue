@@ -1,6 +1,7 @@
 <script setup lang="ts"></script>
 <template>
   <v-card-title class="text-h4 mt-6">Pin-code</v-card-title>
+  <v-img height="200px" src="/images/number-decoder-doc-main.svg" />
   <v-card-text class="text-body-1 mt-3">
     <p>Crack the pin code to disarm this module.</p>
     <p class="mt-2">
