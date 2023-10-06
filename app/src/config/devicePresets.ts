@@ -15,7 +15,7 @@ export default [
     name: "Fidgety modules 2x2",
     width: 2,
     height: 2,
-    modules: ["timer", "binaryLogic", "morseCode", "wireMatcher"],
+    modules: ["timer", "binaryLogic2", "morseCode", "wireMatcher"],
   },
   {
     name: "Test Morse code",
