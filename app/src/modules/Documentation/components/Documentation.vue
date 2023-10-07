@@ -9,7 +9,9 @@ import LabyrinthDocumentation from "@src/modules/Documentation/components/Labyri
 </script>
 <template>
   <v-card width="1000px" class="docs-container pb-15">
-    <v-card-title class="text-h3 mt-6">Bomb defusion manual</v-card-title>
+    <v-card-title class="text-h3 font-weight-bold mt-6 text-center"
+      >BMB DISARMING MANUAL</v-card-title
+    >
     <v-card-text class="text-body-1 mt-3">
       <p>
         Not all modules will be armed for a given game. Only the armed modules
